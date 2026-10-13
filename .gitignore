@@ -8,3 +8,4 @@ dist/
 *.keystore
 *.apk
 /examples/out/
+apkdt_workspace/ 
