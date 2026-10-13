@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>apkdt — APK Decode Tool</title>
+<style>
+  :root {
+    --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --border:#2a2f3a;
+    --fg:#e6e9ef; --muted:#9aa4b2; --accent:#4f8cff; --accent2:#3bd671;
+    --warn:#f0b429; --danger:#ff5c5c; --mono:#121419;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    background:var(--bg); color:var(--fg); }
+  header { display:flex; align-items:center; gap:14px; padding:10px 16px;
+    background:var(--panel); border-bottom:1px solid var(--border); }
+  header h1 { font-size:15px; margin:0; font-weight:600; letter-spacing:.3px; }
+  header .tag { color:var(--muted); font-size:12px; }
+  header .spacer { flex:1; }
+  button { background:var(--panel2); color:var(--fg); border:1px solid var(--border);
+    border-radius:7px; padding:7px 12px; font-size:13px; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  button.go { background:var(--accent2); border-color:var(--accent2); color:#06270f; font-weight:600; }
+  button:disabled { opacity:.5; cursor:not-allowed; }
+  .wrap { display:flex; height:calc(100vh - 53px); }
+  .sidebar { width:320px; min-width:240px; background:var(--panel); border-right:1px solid var(--border);
+    display:flex; flex-direction:column; }
+  .sidebar .search { padding:8px; border-bottom:1px solid var(--border); }
+  .sidebar input { width:100%; background:var(--mono); color:var(--fg); border:1px solid var(--border);
+    border-radius:6px; padding:7px 9px; font-size:13px; }
+  .filelist { overflow:auto; flex:1; }
+  .file { padding:5px 10px; font-size:12.5px; cursor:pointer; white-space:nowrap;
+    overflow:hidden; text-overflow:ellipsis; border-left:3px solid transparent; }
+  .file:hover { background:var(--panel2); }
+  .file.active { background:var(--panel2); border-left-color:var(--accent); }
+  .file.ro { color:var(--muted); }
+  .main { flex:1; display:flex; flex-direction:column; min-width:0; }
+  .toolbar { display:flex; align-items:center; gap:10px; padding:8px 12px;
+    background:var(--panel); border-bottom:1px solid var(--border); }
+  .toolbar .fname { font-family:ui-monospace,Consolas,monospace; font-size:12.5px; color:var(--muted);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  textarea#editor { flex:1; width:100%; border:0; resize:none; outline:none;
+    background:var(--mono); color:var(--fg); font-family:ui-monospace,Consolas,monospace;
+    font-size:13px; line-height:1.5; padding:12px; tab-size:4; }
+  .drop { margin:auto; text-align:center; color:var(--muted); max-width:460px; padding:40px; }
+  .drop h2 { color:var(--fg); font-weight:600; }
+  .drop .zone { border:2px dashed var(--border); border-radius:12px; padding:34px; margin-top:16px;
+    cursor:pointer; }
+  .drop .zone.hover { border-color:var(--accent); background:var(--panel); }
+  #log { background:var(--mono); border-top:1px solid var(--border); color:var(--muted);
+    font-family:ui-monospace,Consolas,monospace; font-size:12px; padding:8px 12px; height:120px;
+    overflow:auto; white-space:pre-wrap; }
+  .pill { font-size:11px; padding:2px 7px; border-radius:20px; border:1px solid var(--border); color:var(--muted); }
+  .pill.ok { color:var(--accent2); border-color:var(--accent2); }
+  .pill.no { color:var(--danger); border-color:var(--danger); }
+  a.dl { color:var(--accent2); font-weight:600; text-decoration:none; }
+  .notice { font-size:11.5px; color:var(--warn); }
+</style>
+</head>
+<body>
+<header>
+  <h1>apkdt</h1>
+  <span class="tag">decode → edit → rebuild &nbsp;·&nbsp; local · 127.0.0.1</span>
+  <span id="tools"></span>
+  <span class="spacer"></span>
+  <span class="notice">Only for apps you own or are authorized to modify.</span>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="search"><input id="filter" placeholder="Filter files…" oninput="renderFiles()"></div>
+    <div class="filelist" id="filelist"></div>
+  </aside>
+
+  <section class="main">
+    <div class="toolbar">
+      <button id="uploadBtn" class="primary">⬆ Upload APK</button>
+      <input id="apkInput" type="file" accept=".apk,.xapk,.apks" style="display:none">
+      <span class="fname" id="fname">no file open</span>
+      <span class="spacer" style="flex:1"></span>
+      <button id="saveBtn" disabled>💾 Save file</button>
+      <button id="rebuildBtn" class="go" disabled>🔨 Rebuild &amp; Sign</button>
+      <span id="dlwrap"></span>
+    </div>
+
+    <div id="welcome" class="drop">
+      <h2>Upload an APK to begin</h2>
+      <p>It will be decoded into smali, resources, manifest and (if JADX is present) a readable Java view. Edit any text file on the left, then Rebuild.</p>
+      <div class="zone" id="dropzone">Click here or drop an .apk file</div>
+    </div>
+
+    <textarea id="editor" spellcheck="false" style="display:none"></textarea>
+    <div id="log">ready.</div>
+  </section>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+let files = [], current = null, dirty = false;
+
+function log(msg, cls) {
+  const el = $("#log");
+  const line = document.createElement("div");
+  line.textContent = (new Date().toLocaleTimeString()) + "  " + msg;
+  if (cls) line.style.color = cls === "err" ? "var(--danger)"
+                           : cls === "ok" ? "var(--accent2)" : "var(--warn)";
+  el.appendChild(line); el.scrollTop = el.scrollHeight;
+}
+
+async function refreshStatus() {
+  const r = await fetch("/api/status"); const s = await r.json();
+  const t = s.tools || {};
+  const need = ["apktool","zipalign","apksigner"];
+  const ok = need.every(n => t[n]);
+  $("#tools").innerHTML = Object.entries(t).map(([k,v]) =>
+    `<span class="pill ${v?'ok':'no'}">${k}</span>`).join(" ");
+  $("#rebuildBtn").disabled = !(s.decoded && ok);
+  if (!ok) log("Missing required tools: " + need.filter(n=>!t[n]).join(", ") +
+               " — rebuild disabled. See README (APKDT_TOOLS).", "warn");
+  if (s.decoded) { await loadFiles(); hideWelcome(); }
+}
+
+function hideWelcome(){ $("#welcome").style.display="none"; $("#editor").style.display="block"; }
+
+async function loadFiles() {
+  const r = await fetch("/api/files"); const d = await r.json();
+  files = d.files || []; renderFiles();
+  log(files.length + " files loaded.");
+}
+
+function renderFiles() {
+  const q = $("#filter").value.toLowerCase();
+  const list = $("#filelist"); list.innerHTML = "";
+  for (const f of files) {
+    if (q && !f.path.toLowerCase().includes(q)) continue;
+    const div = document.createElement("div");
+    div.className = "file" + (f.editable ? "" : " ro") + (current===f.path ? " active" : "");
+    div.textContent = f.path;
+    div.title = f.path + (f.editable ? "" : "  (not editable here)");
+    if (f.editable) div.onclick = () => openFile(f.path);
+    else div.onclick = () => log(f.path + " is binary / too large — edit it on disk.", "warn");
+    list.appendChild(div);
+  }
+}
+
+async function openFile(path) {
+  if (dirty && !confirm("Discard unsaved changes to " + current + "?")) return;
+  const r = await fetch("/api/file?path=" + encodeURIComponent(path));
+  const d = await r.json();
+  if (d.error) { log("open failed: " + d.error, "err"); return; }
+  current = path; dirty = false;
+  $("#editor").value = d.content;
+  $("#fname").textContent = path;
+  $("#saveBtn").disabled = true;
+  renderFiles();
+}
+
+async function saveFile() {
+  if (!current) return;
+  const r = await fetch("/api/file", {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({path: current, content: $("#editor").value})
+  });
+  const d = await r.json();
+  if (d.error) { log("save failed: " + d.error, "err"); return; }
+  dirty = false; $("#saveBtn").disabled = true;
+  log("saved " + current, "ok");
+}
+
+$("#editor").addEventListener("input", () => {
+  dirty = true; $("#saveBtn").disabled = false;
+});
+
+function pickFile(){ $("#apkInput").click(); }
+$("#uploadBtn").onclick = pickFile;
+$("#dropzone").onclick = pickFile;
+$("#apkInput").onchange = e => { if (e.target.files[0]) uploadApk(e.target.files[0]); };
+
+const dz = $("#dropzone");
+["dragover","dragenter"].forEach(ev => dz.addEventListener(ev, e => {
+  e.preventDefault(); dz.classList.add("hover"); }));
+["dragleave","drop"].forEach(ev => dz.addEventListener(ev, e => {
+  e.preventDefault(); dz.classList.remove("hover"); }));
+dz.addEventListener("drop", e => { if (e.dataTransfer.files[0]) uploadApk(e.dataTransfer.files[0]); });
+
+async function uploadApk(file) {
+  log("uploading " + file.name + " …");
+  const fd = new FormData(); fd.append("apk", file);
+  const r = await fetch("/api/upload", {method:"POST", body:fd});
+  const d = await r.json();
+  if (d.error) { log("decode failed: " + d.error, "err"); alert("Decode failed: " + d.error); return; }
+  log("decoded " + d.apk + " ✓", "ok");
+  hideWelcome(); await loadFiles(); await refreshStatus();
+}
+
+$("#saveBtn").onclick = saveFile;
+$("#rebuildBtn").onclick = async () => {
+  if (dirty) await saveFile();
+  log("rebuilding (apktool build → zipalign → sign) …");
+  $("#rebuildBtn").disabled = true;
+  const r = await fetch("/api/rebuild", {method:"POST"});
+  const d = await r.json();
+  $("#rebuildBtn").disabled = false;
+  if (d.error) { log("rebuild failed: " + d.error, "err"); alert("Rebuild failed:\n" + d.error); return; }
+  log("rebuilt & signed ✓ — download ready.", "ok");
+  $("#dlwrap").innerHTML = ' <a class="dl" href="/api/download">⬇ download rebuilt.apk</a>';
+};
+
+window.addEventListener("beforeunload", e => { if (dirty){ e.preventDefault(); e.returnValue=""; }});
+refreshStatus();
+</script>
+</body>
+</html>

@@ -125,6 +125,29 @@ apkdt sign  myapp-rebuilt.apk --keystore my-debug.keystore
 
 ---
 
+## Web UI (upload → edit → rebuild in the browser)
+
+Prefer a point-and-click workflow over the CLI? Launch the built-in local web app:
+
+```bash
+pip install "apkdecodetool[web]"     # installs Flask
+apkdt serve                          # opens http://127.0.0.1:8765 in your browser
+```
+
+Then, in the browser:
+
+1. **Upload an APK** — it is decoded automatically (smali, resources, manifest, and a JADX Java view if JADX is installed).
+2. **Browse & edit** any text file in the file tree, with a filter box; click **Save file**.
+3. Click **🔨 Rebuild & Sign** — the app runs `apktool build` → `zipalign` → `apksigner` (with an auto-generated test keystore) and gives you a **download** link for the rebuilt APK.
+
+Notes:
+- The server binds to **127.0.0.1 only** and keeps every file operation inside one workspace directory (path traversal is rejected). It is a local tool, not something to expose on a network.
+- Uploads, the decoded project and outputs live under `./apkdt_workspace/` by default (override with `apkdt serve --workdir <dir>`).
+- Rebuild is enabled only when `apktool`, `zipalign` and `apksigner` are all found (see [Telling apkdt where the tools are](#telling-apkdt-where-the-tools-are-no-path-editing)).
+- Same scope as everything else: **apps you own or are authorized to modify.**
+
+---
+
 ## Commands
 
 ### `decode`
@@ -313,6 +336,7 @@ apkdecodetool/
 - [x] `config` show / set-version / allow-http
 - [x] `build` + `sign` (+ keystore generation)
 - [x] `all` with patch files
+- [x] `serve` — local web UI (upload / edit / rebuild in the browser)
 - [ ] `design set-icon` and layout helpers
 - [ ] split APK / `.xapk` merging
 - [ ] native-library string extraction

@@ -162,6 +162,14 @@ def cmd_sign(args) -> int:
     return 0
 
 
+# -- serve ---------------------------------------------------------------
+def cmd_serve(args) -> int:
+    from apkdt.web.server import serve
+    serve(args.workdir, host=args.host, port=args.port,
+          open_browser=not args.no_browser)
+    return 0
+
+
 # -- all -----------------------------------------------------------------
 def cmd_all(args) -> int:
     work = args.workdir or (args.output.replace(".apk", "") + "_src")

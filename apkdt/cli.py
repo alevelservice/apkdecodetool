@@ -97,6 +97,15 @@ def build_parser() -> argparse.ArgumentParser:
                     help="create the keystore first if it does not exist")
     sp.set_defaults(func=w.cmd_sign)
 
+    # serve
+    sp = sub.add_parser("serve", help="launch the local web UI (upload/decode/edit/rebuild)")
+    sp.add_argument("--workdir", default="apkdt_workspace",
+                    help="where uploads/decoded project/output live (default: ./apkdt_workspace)")
+    sp.add_argument("--host", default="127.0.0.1")
+    sp.add_argument("--port", type=int, default=8765)
+    sp.add_argument("--no-browser", action="store_true", help="do not auto-open a browser")
+    sp.set_defaults(func=w.cmd_serve)
+
     # all
     sp = sub.add_parser("all", help="decode -> patch -> build -> sign")
     sp.add_argument("apk")
