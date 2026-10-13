@@ -70,6 +70,29 @@
   a.dl:hover { text-decoration:underline; }
   .notice { font-size:11.5px; color:var(--warn); }
 
+  /* info bar (framework + editability) */
+  #infobar { display:flex; align-items:center; gap:18px; padding:9px 14px;
+    background:var(--panel); border-bottom:1px solid var(--border); }
+  .ib-left { display:flex; flex-direction:column; gap:1px; min-width:170px; }
+  .ib-fw { font-weight:700; font-size:13.5px; }
+  .ib-lang { font-size:11.5px; color:var(--muted); }
+  .ib-meter { flex:1; max-width:420px; }
+  .ib-meterhead { display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted); margin-bottom:4px; }
+  .meter { height:10px; background:var(--panel2); border:1px solid var(--border); border-radius:20px; overflow:hidden; }
+  .meter > span { display:block; height:100%; width:0%; border-radius:20px; transition:width .4s ease; }
+  .lvl-high > span { background:linear-gradient(90deg,#16a34a,#22c55e); }
+  .lvl-medium > span { background:linear-gradient(90deg,#d97706,#f59e0b); }
+  .lvl-low > span { background:linear-gradient(90deg,var(--red-dark),var(--red)); }
+  .ib-more { font-size:12px; padding:6px 10px; }
+  #ibDetails { background:#fff; border-bottom:1px solid var(--border); padding:12px 16px; font-size:12.5px; }
+  #ibDetails .cols { display:flex; gap:28px; flex-wrap:wrap; }
+  #ibDetails h4 { margin:0 0 6px; font-size:12px; text-transform:uppercase; letter-spacing:.4px; color:var(--muted); }
+  #ibDetails ul { margin:0; padding-left:18px; }
+  #ibDetails li { margin:2px 0; }
+  #ibDetails .can li { color:#15803d; }
+  #ibDetails .cant li { color:var(--red-dark); }
+  #ibDetails .sum { margin-bottom:10px; color:var(--fg); }
+
   /* progress overlay */
   .overlay { position:fixed; inset:0; background:rgba(246,247,249,.82); backdrop-filter:blur(3px);
     display:none; align-items:center; justify-content:center; z-index:50; }
@@ -117,6 +140,19 @@
       <button id="rebuildBtn" class="go" disabled>🔨 Rebuild &amp; Sign</button>
       <span id="dlwrap"></span>
     </div>
+
+    <div id="infobar" style="display:none">
+      <div class="ib-left">
+        <span class="ib-fw" id="ibFramework">—</span>
+        <span class="ib-lang" id="ibLang"></span>
+      </div>
+      <div class="ib-meter">
+        <div class="ib-meterhead"><span id="ibEditLabel">Editability</span><span id="ibPct"></span></div>
+        <div class="meter"><span id="ibFill"></span></div>
+      </div>
+      <button class="ib-more" id="ibMoreBtn" title="Details">ⓘ details</button>
+    </div>
+    <div id="ibDetails" style="display:none"></div>
 
     <div id="welcome" class="drop">
       <h2>Upload an APK to begin</h2>
@@ -179,9 +215,32 @@ async function refreshStatus() {
   $("#rebuildBtn").disabled = !(s.decoded && ok);
   $("#standaloneBtn").disabled = !s.decoded;
   if(!ok) log("Missing required tools: "+need.filter(n=>!t[n]).join(", ")+" — rebuild disabled.","warn");
-  if(s.decoded){ await loadFiles(); hideWelcome(); }
+  if(s.decoded){ await loadFiles(); hideWelcome(); loadAnalysis(); }
 }
 function hideWelcome(){ $("#welcome").style.display="none"; $("#editor").style.display="block"; }
+
+async function loadAnalysis(){
+  let a; try{ a = await (await fetch("/api/analyze")).json(); }catch(_){ return; }
+  if(!a || a.error) return;
+  $("#infobar").style.display="flex";
+  $("#ibFramework").textContent = a.framework;
+  $("#ibLang").textContent = a.language;
+  $("#ibEditLabel").textContent = "Editability — " + a.editability;
+  $("#ibPct").textContent = a.percent + "%";
+  const meter = $("#infobar").querySelector(".meter");
+  meter.className = "meter lvl-" + (a.editability||"").toLowerCase();
+  $("#ibFill").style.width = a.percent + "%";
+  const can = (a.editable||[]).map(x=>`<li>${x}</li>`).join("");
+  const cant = (a.not_editable||[]).map(x=>`<li>${x}</li>`).join("") || "<li>—</li>";
+  $("#ibDetails").innerHTML =
+    `<div class="sum">${a.summary}</div><div class="cols">`+
+    `<div class="can"><h4>You can edit</h4><ul>${can}</ul></div>`+
+    `<div class="cant"><h4>You cannot edit</h4><ul>${cant}</ul></div></div>`;
+  log(`detected ${a.framework} — editability ${a.editability} (~${a.percent}%)`,
+      a.editability==="Low"?"warn":"ok");
+}
+$("#ibMoreBtn").onclick=()=>{ const d=$("#ibDetails");
+  d.style.display = d.style.display==="none" ? "block" : "none"; };
 
 async function loadFiles() {
   const d = await (await fetch("/api/files")).json();

@@ -137,8 +137,9 @@ apkdt serve                          # opens http://127.0.0.1:8765 in your brows
 Then, in the browser:
 
 1. **Upload an APK** — it is decoded automatically (smali, resources, manifest, and a JADX Java view if JADX is installed).
-2. **Browse & edit** any text file in the file tree, with a filter box; click **Save file**.
-3. Click **🔨 Rebuild & Sign** — the app runs `apktool build` → `zipalign` → `apksigner` (with an auto-generated test keystore) and gives you a **download** link for the rebuilt APK.
+2. An **info bar** shows the detected **framework/language** and an **editability meter** (High / Medium / Low), with an *ⓘ details* breakdown of what you can and cannot change — so you know up front whether the app's logic is editable (e.g. a Flutter app's Dart logic is not).
+3. **Browse & edit** any text file in the file tree, with a filter box; click **Save file**.
+4. Click **🔨 Rebuild & Sign** — the app runs `apktool build` → `zipalign` → `apksigner` (with an auto-generated test keystore) and gives you a **download** link for the rebuilt APK.
 
 Notes:
 - The server binds to **127.0.0.1 only** and keeps every file operation inside one workspace directory (path traversal is rejected). It is a local tool, not something to expose on a network.
@@ -355,6 +356,7 @@ apkdecodetool/
 - [x] `all` with patch files
 - [x] `serve` — local web UI (upload / edit / rebuild in the browser)
 - [x] `verify` — report APK signature schemes
+- [x] `info` — detect framework/language + editability estimate (also shown in the web UI)
 - [x] `config standalone` — strip split-APK requirement from a bundle base.apk
 - [ ] `design set-icon` and layout helpers
 - [ ] split APK / `.xapk` merging

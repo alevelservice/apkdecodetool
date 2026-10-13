@@ -100,6 +100,11 @@ def build_parser() -> argparse.ArgumentParser:
                     help="create the keystore first if it does not exist")
     sp.set_defaults(func=w.cmd_sign)
 
+    # info
+    sp = sub.add_parser("info", help="detect framework/language and how editable the app is")
+    sp.add_argument("project")
+    sp.set_defaults(func=w.cmd_info)
+
     # verify
     sp = sub.add_parser("verify", help="print an APK's signature info (v1/v2/v3 schemes)")
     sp.add_argument("apk")

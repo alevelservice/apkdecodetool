@@ -172,6 +172,28 @@ def cmd_sign(args) -> int:
     return 0
 
 
+# -- info (framework + editability) --------------------------------------
+def cmd_info(args) -> int:
+    from apkdt.analyze import analyze
+    DecodedProject(args.project)  # validates it's a project
+    a = analyze(args.project)
+    info(f"Framework : {a.framework}")
+    info(f"Language  : {a.language}")
+    info(f"Editable  : {a.editability}  (~{a.percent}%)")
+    print(a.summary)
+    if a.editable:
+        print("\nYou CAN edit:")
+        for x in a.editable:
+            print(f"  + {x}")
+    if a.not_editable:
+        print("\nYou CANNOT edit:")
+        for x in a.not_editable:
+            print(f"  - {x}")
+    if a.stats:
+        print(f"\nstats: {a.stats}")
+    return 0
+
+
 # -- verify --------------------------------------------------------------
 def cmd_verify(args) -> int:
     out = signtool.verify(args.apk)

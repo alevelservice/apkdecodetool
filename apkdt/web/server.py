@@ -168,6 +168,14 @@ def create_app(workdir: str) -> Flask:
         proj = DecodedProject(ws.project)
         return jsonify(proj.scan_endpoints().to_json())
 
+    # -- analysis: framework + editability ------------------------------
+    @app.get("/api/analyze")
+    def analyze_project():
+        from apkdt.analyze import analyze
+        if not os.path.exists(os.path.join(ws.project, "AndroidManifest.xml")):
+            return jsonify({"error": "nothing decoded yet"}), 400
+        return jsonify(analyze(ws.project).to_json())
+
     # -- make standalone (strip split-APK requirement) ------------------
     @app.post("/api/standalone")
     def standalone():
