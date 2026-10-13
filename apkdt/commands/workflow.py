@@ -28,6 +28,9 @@ def cmd_doctor(args) -> int:
                 missing_required = True
     if missing_required:
         warn("Some required tools are missing; decode/build/sign will not work until they are installed.")
+        warn("If they ARE installed but not found, point apkdt at them without editing PATH, e.g.:")
+        warn('  set APKDT_TOOLS=C:\\android-tools;C:\\android-tools\\jadx\\bin;C:\\android-sdk\\build-tools\\34.0.0')
+        warn("  (or set a single tool: set APKDT_APKTOOL=C:\\android-tools\\apktool.bat )")
         return 1
     ok("All required tools are available.")
     return 0

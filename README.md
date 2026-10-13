@@ -71,6 +71,22 @@ Runtime and external tools (the CLI shells out to these — it does not reimplem
 
 On Debian/Ubuntu most of these are available via `apt` (`apktool`, `zipalign`, `apksigner`) plus a JADX release download.
 
+### Telling `apkdt` where the tools are (no PATH editing)
+
+If the tools are installed but not on your `PATH` (common on Windows), point `apkdt` at them with environment variables instead of editing `PATH`:
+
+- **`APKDT_TOOLS`** — one or more directories (`;`-separated on Windows, `:` on Linux/macOS) to search, e.g.
+  ```cmd
+  set APKDT_TOOLS=C:\android-tools;C:\android-tools\jadx\bin;C:\android-sdk\build-tools\34.0.0
+  ```
+- **`APKDT_<TOOL>`** — an explicit path to a single tool, e.g.
+  ```cmd
+  set APKDT_APKTOOL=C:\android-tools\apktool.bat
+  set APKDT_ZIPALIGN=C:\android-sdk\build-tools\34.0.0\zipalign.exe
+  ```
+
+Resolution order is: `APKDT_<TOOL>` → `APKDT_TOOLS` dirs → system `PATH`. On Windows this respects `PATHEXT`, so `apktool` resolves to `apktool.bat`. Use `set` for the current terminal, or `setx` to persist (then open a new terminal).
+
 ---
 
 ## Installation

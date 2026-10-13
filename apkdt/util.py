@@ -59,6 +59,34 @@ class RunResult:
 
 
 def which(name: str) -> str | None:
+    """Locate an external tool.
+
+    Resolution order (first hit wins):
+      1. APKDT_<NAME>  — explicit full path to the executable
+         (e.g. APKDT_APKTOOL=C:\\android-tools\\apktool.bat)
+      2. APKDT_TOOLS   — one or more directories (os.pathsep-separated)
+         searched for the tool; respects Windows PATHEXT (.bat/.cmd/.exe)
+      3. the system PATH (shutil.which)
+
+    This lets the tools be found without editing PATH, which is awkward and
+    error-prone on Windows.
+    """
+    import os
+
+    explicit = os.environ.get("APKDT_" + name.upper().replace("-", "_"))
+    if explicit and os.path.isfile(explicit):
+        return explicit
+
+    tools_dirs = os.environ.get("APKDT_TOOLS")
+    if tools_dirs:
+        for d in tools_dirs.split(os.pathsep):
+            d = d.strip().strip('"')
+            if not d:
+                continue
+            found = shutil.which(name, path=d)
+            if found:
+                return found
+
     return shutil.which(name)
 
 
