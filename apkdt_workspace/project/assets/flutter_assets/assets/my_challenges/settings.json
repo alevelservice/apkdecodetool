@@ -1,0 +1,72 @@
+{
+  "completedModal": {
+    "headerText": [
+      {
+        "language": "en",
+        "value": "Campaign Completed!"
+      },
+      {
+        "language": "bn",
+        "value": "ক্যাম্পেইন শেষ!"
+      }
+    ],
+    "bodyText": [
+      {
+        "language": "en",
+        "value": "Your campaign has ended on %s.\nTap on \"See More\" to get more details"
+      },
+      {
+        "language": "bn",
+        "value": "আপনার ক্যাম্পেইনটি %s তারিখে শেষ হয়েছে\nবিস্তারিত জানতে নিচের বাটন প্রেস করুন"
+      }
+    ],
+    "imageUrl": "http://test-url.com"
+  },
+  "expiredModal": {
+    "headerText": [
+      {
+        "language": "en",
+        "value": "Sorry!"
+      },
+      {
+        "language": "bn",
+        "value": "দুঃখিত!"
+      }
+    ],
+    "bodyText": [
+      {
+        "language": "en",
+        "value": "The task is expired"
+      },
+      {
+        "language": "bn",
+        "value": "কাজটির মেয়াদ শেষ হয়ে গেছে"
+      }
+    ],
+    "imageUrl": "http://test-url.com"
+  },
+  "upcomingModal": {
+    "headerText": [
+      {
+        "language": "en",
+        "value": "Sorry!"
+      },
+      {
+        "language": "bn",
+        "value": "দুঃখিত!"
+      }
+    ],
+    "bodyText": [
+      {
+        "language": "en",
+        "value": "This week isn't available right now.\nPlease complete that task when it's available."
+      },
+      {
+        "language": "bn",
+        "value": "এই কাজটি এখনই সম্পন্ন করা যাবে না\nউপলব্ধ হয়ে ওঠার পরে দয়া করে সেই কাজটি সম্পূর্ণ করুন"
+      }
+    ],
+    "imageUrl": "http://test-url.com"
+  },
+  "updateTime": "2020-06-14 14:46:36:446 +0600"
+}

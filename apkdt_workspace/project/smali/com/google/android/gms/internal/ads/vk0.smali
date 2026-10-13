@@ -1,0 +1,82 @@
+.class public final Lcom/google/android/gms/internal/ads/vk0;
+.super Ljava/lang/Object;
+.source "com.google.android.gms:play-services-ads@@18.1.0"
+
+# interfaces
+.implements Lcom/google/android/gms/internal/ads/ko0;
+
+
+# annotations
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "Ljava/lang/Object;",
+        "Lcom/google/android/gms/internal/ads/ko0<",
+        "Lcom/google/android/gms/internal/ads/sk0;",
+        ">;"
+    }
+.end annotation
+
+
+# instance fields
+.field private final a:Lcom/google/android/gms/internal/ads/tz0;
+
+.field private final b:Lcom/google/android/gms/internal/ads/ws0;
+
+
+# direct methods
+.method public constructor <init>(Lcom/google/android/gms/internal/ads/tz0;Lcom/google/android/gms/internal/ads/ws0;)V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 2
+    iput-object p1, p0, Lcom/google/android/gms/internal/ads/vk0;->a:Lcom/google/android/gms/internal/ads/tz0;
+
+    .line 3
+    iput-object p2, p0, Lcom/google/android/gms/internal/ads/vk0;->b:Lcom/google/android/gms/internal/ads/ws0;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final a()Lcom/google/android/gms/internal/ads/qz0;
+    .locals 2
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Lcom/google/android/gms/internal/ads/qz0<",
+            "Lcom/google/android/gms/internal/ads/sk0;",
+            ">;"
+        }
+    .end annotation
+
+    .line 1
+    iget-object v0, p0, Lcom/google/android/gms/internal/ads/vk0;->a:Lcom/google/android/gms/internal/ads/tz0;
+
+    new-instance v1, Lcom/google/android/gms/internal/ads/uk0;
+
+    invoke-direct {v1, p0}, Lcom/google/android/gms/internal/ads/uk0;-><init>(Lcom/google/android/gms/internal/ads/vk0;)V
+
+    invoke-interface {v0, v1}, Lcom/google/android/gms/internal/ads/tz0;->a(Ljava/util/concurrent/Callable;)Lcom/google/android/gms/internal/ads/qz0;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method final synthetic b()Lcom/google/android/gms/internal/ads/sk0;
+    .locals 2
+
+    .line 1
+    new-instance v0, Lcom/google/android/gms/internal/ads/sk0;
+
+    iget-object v1, p0, Lcom/google/android/gms/internal/ads/vk0;->b:Lcom/google/android/gms/internal/ads/ws0;
+
+    iget-object v1, v1, Lcom/google/android/gms/internal/ads/ws0;->j:Lcom/google/android/gms/internal/ads/zztx;
+
+    invoke-direct {v0, v1}, Lcom/google/android/gms/internal/ads/sk0;-><init>(Lcom/google/android/gms/internal/ads/zztx;)V
+
+    return-object v0
+.end method

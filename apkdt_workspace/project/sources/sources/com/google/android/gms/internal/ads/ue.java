@@ -1,0 +1,25 @@
+package com.google.android.gms.internal.ads;
+
+/* compiled from: com.google.android.gms:play-services-ads@@18.1.0 */
+/* loaded from: classes.dex */
+final class ue implements Runnable {
+
+    /* renamed from: e, reason: collision with root package name */
+    private final /* synthetic */ zzaxr f9719e;
+
+    /* JADX INFO: Access modifiers changed from: package-private */
+    public ue(zzaxr zzaxrVar) {
+        this.f9719e = zzaxrVar;
+    }
+
+    @Override // java.lang.Runnable
+    public final void run() {
+        cf cfVar;
+        cf cfVar2;
+        cfVar = this.f9719e.r;
+        if (cfVar != null) {
+            cfVar2 = this.f9719e.r;
+            cfVar2.zzei();
+        }
+    }
+}

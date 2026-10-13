@@ -1,0 +1,39 @@
+.class public interface abstract Lcom/google/common/collect/t0;
+.super Ljava/lang/Object;
+.source "Multimap.java"
+
+
+# annotations
+.annotation build Lcom/google/common/annotations/GwtCompatible;
+.end annotation
+
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "<K:",
+        "Ljava/lang/Object;",
+        "V:",
+        "Ljava/lang/Object;",
+        ">",
+        "Ljava/lang/Object;"
+    }
+.end annotation
+
+
+# virtual methods
+.method public abstract asMap()Ljava/util/Map;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/Map<",
+            "TK;",
+            "Ljava/util/Collection<",
+            "TV;>;>;"
+        }
+    .end annotation
+.end method
+
+.method public abstract isEmpty()Z
+.end method
+
+.method public abstract size()I
+.end method

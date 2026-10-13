@@ -1,0 +1,24 @@
+package e.i.b.a.i.w.j;
+
+import android.database.sqlite.SQLiteDatabase;
+import e.i.b.a.i.w.j.h0;
+
+/* compiled from: SchemaManager.java */
+/* loaded from: classes.dex */
+final /* synthetic */ class e0 implements h0.a {
+
+    /* renamed from: a, reason: collision with root package name */
+    private static final e0 f17770a = new e0();
+
+    private e0() {
+    }
+
+    public static h0.a a() {
+        return f17770a;
+    }
+
+    @Override // e.i.b.a.i.w.j.h0.a
+    public void a(SQLiteDatabase sQLiteDatabase) {
+        h0.c(sQLiteDatabase);
+    }
+}

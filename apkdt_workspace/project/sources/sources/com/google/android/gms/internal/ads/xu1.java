@@ -1,0 +1,6 @@
+package com.google.android.gms.internal.ads;
+
+/* compiled from: com.google.android.gms:play-services-ads-lite@@18.1.0 */
+/* loaded from: classes.dex */
+final class xu1 implements com.google.android.gms.ads.n.a {
+}

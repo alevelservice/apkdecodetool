@@ -1,0 +1,14 @@
+package e.b.b.a.a.d.h;
+
+import java.io.File;
+import java.util.Comparator;
+
+/* compiled from: UploadManager.java */
+/* loaded from: classes.dex */
+final class g implements Comparator<File> {
+    @Override // java.util.Comparator
+    /* renamed from: a, reason: merged with bridge method [inline-methods] */
+    public int compare(File file, File file2) {
+        return file.getName().compareTo(file2.getName());
+    }
+}

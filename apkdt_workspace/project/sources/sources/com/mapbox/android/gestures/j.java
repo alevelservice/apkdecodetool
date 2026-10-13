@@ -1,0 +1,33 @@
+package com.mapbox.android.gestures;
+
+/* compiled from: R.java */
+/* loaded from: classes2.dex */
+public final class j {
+    public static final int compat_button_inset_horizontal_material = 2131099731;
+    public static final int compat_button_inset_vertical_material = 2131099732;
+    public static final int compat_button_padding_horizontal_material = 2131099733;
+    public static final int compat_button_padding_vertical_material = 2131099734;
+    public static final int compat_control_corner_material = 2131099735;
+    public static final int compat_notification_large_icon_max_height = 2131099736;
+    public static final int compat_notification_large_icon_max_width = 2131099737;
+    public static final int mapbox_defaultMultiTapMovementThreshold = 2131099816;
+    public static final int mapbox_defaultScaleSpanSinceStartThreshold = 2131099817;
+    public static final int mapbox_defaultShovePixelThreshold = 2131099818;
+    public static final int mapbox_internalMinSpan23 = 2131099824;
+    public static final int mapbox_internalMinSpan24 = 2131099825;
+    public static final int notification_action_icon_size = 2131099884;
+    public static final int notification_action_text_size = 2131099885;
+    public static final int notification_big_circle_margin = 2131099886;
+    public static final int notification_content_margin_start = 2131099887;
+    public static final int notification_large_icon_height = 2131099888;
+    public static final int notification_large_icon_width = 2131099889;
+    public static final int notification_main_column_padding_top = 2131099890;
+    public static final int notification_media_narrow_margin = 2131099891;
+    public static final int notification_right_icon_size = 2131099892;
+    public static final int notification_right_side_padding_top = 2131099893;
+    public static final int notification_small_icon_background_padding = 2131099894;
+    public static final int notification_small_icon_size_as_large = 2131099895;
+    public static final int notification_subtext_size = 2131099896;
+    public static final int notification_top_pad = 2131099897;
+    public static final int notification_top_pad_large_text = 2131099898;
+}

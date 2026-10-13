@@ -1,0 +1,349 @@
+{
+  "months": [
+    {
+      "lastUpdateTime": "2019-04-21 11:59:18:000 +0600",
+      "period": "201904",
+      "startBalance": 15251.07,
+      "endBalance": 15251.07,
+      "summaries": [
+        {
+          "featureName": "SEND_MONEY",
+          "count": 5,
+          "amount": 409.5,
+          "transactionType": "DEBIT",
+          "serviceNames": [
+            {
+              "language": "en",
+              "value": "Send Money"
+            },
+            {
+              "language": "bn",
+              "value": "Send Money[bn]"
+            }
+          ]
+        },
+        {
+          "featureName": "SEND_MONEY",
+          "count": 1,
+          "amount": 2.22,
+          "transactionType": "DEBIT",
+          "serviceNames": [
+            {
+              "language": "en",
+              "value": "Send Money"
+            },
+            {
+              "language": "bn",
+              "value": "Send Money[bn]"
+            }
+          ]
+        },
+        {
+          "featureName": "SEND_MONEY",
+          "count": 6,
+          "amount": 15.39,
+          "transactionType": "DEBIT",
+          "serviceNames": [
+            {
+              "language": "en",
+              "value": "Send Money"
+            },
+            {
+              "language": "bn",
+              "value": "Send Money[bn]"
+            }
+          ]
+        },
+        {
+          "featureName": "CASH_OUT",
+          "count": 3,
+          "amount": 5105.55,
+          "transactionType": "CREDIT",
+          "serviceNames": [
+            {
+              "language": "en",
+              "value": "Cash Out"
+            },
+            {
+              "language": "bn",
+              "value": "Cash Out[bn]"
+            }
+          ]
+        },
+        {
+          "featureName": "CASH_OUT",
+          "count": 1,
+          "amount": 290,
+          "transactionType": "CREDIT",
+          "serviceNames": [
+            {
+              "language": "en",
+              "value": "Cash Out"
+            },
+            {
+              "language": "bn",
+              "value": "Cash Out[bn]"
+            }
+          ]
+        },
+        {
+          "featureName": "CASH_OUT",
+          "count": 3,
+          "amount": 260,
+          "transactionType": "CREDIT",
+          "serviceNames": [
+            {
+              "language": "en",
+              "value": "Cash Out"
+            },
+            {
+              "language": "bn",
+              "value": "Cash Out[bn]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lastUpdateTime": "2019-03-15 11:59:18:000 +0600",
+      "period": "201903",
+      "startBalance": 8275.13,
+      "endBalance": 4312.90,
+      "summaries": [
+        {
+          "featureName": "SEND_MONEY",
+          "count": 1,
+          "amount": 100,
+          "transactionType": "DEBIT",
+          "serviceNames": [
+            {
+              "language": "en",
+              "value": "Send Money"
+            },
+            {
+              "language": "bn",
+              "value": "Send Money[bn]"
+            }
+          ]
+        },
+        {
+          "featureName": "SEND_MONEY",
+          "count": 1,
+          "amount": 1,
+          "transactionType": "DEBIT",
+          "serviceNames": [
+            {
+              "language": "en",
+              "value": "Send Money"
+            },
+            {
+              "language": "bn",
+              "value": "Send Money[bn]"
+            }
+          ]
+        },
+        {
+          "featureName": "CASH_OUT",
+          "count": 1,
+          "amount": 97,
+          "transactionType": "CREDIT",
+          "serviceNames": [
+            {
+              "language": "en",
+              "value": "Cash Out"
+            },
+            {
+              "language": "bn",
+              "value": "Cash Out[bn]"
+            }
+          ]
+        },
+        {
+          "featureName": "CASH_OUT",
+          "count": 1,
+          "amount": 10000,
+          "transactionType": "CREDIT",
+          "serviceNames": [
+            {
+              "language": "en",
+              "value": "Cash Out"
+            },
+            {
+              "language": "bn",
+              "value": "Cash Out[bn]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+    "lastUpdateTime": "2019-02-17 11:59:18:000 +0600",
+    "period": "201902",
+    "startBalance": 719.19,
+    "endBalance": 122.90,
+    "summaries": [
+      {
+        "featureName": "SEND_MONEY",
+        "count": 1,
+        "amount": 12,
+        "transactionType": "DEBIT",
+        "serviceNames": [
+          {
+            "language": "en",
+            "value": "Send Money"
+          },
+          {
+            "language": "bn",
+            "value": "Send Money[bn]"
+          }
+        ]
+      },
+      {
+        "featureName": "SEND_MONEY",
+        "count": 3,
+        "amount": 122,
+        "transactionType": "DEBIT",
+        "serviceNames": [
+          {
+            "language": "en",
+            "value": "Send Money"
+          },
+          {
+            "language": "bn",
+            "value": "Send Money[bn]"
+          }
+        ]
+      },
+      {
+        "featureName": "CASH_OUT",
+        "count": 1,
+        "amount": 141.22,
+        "transactionType": "CREDIT",
+        "serviceNames": [
+          {
+            "language": "en",
+            "value": "Cash Out"
+          },
+          {
+            "language": "bn",
+            "value": "Cash Out[bn]"
+          }
+        ]
+      },
+      {
+        "featureName": "CASH_OUT",
+        "count": 1,
+        "amount": 7811.1,
+        "transactionType": "CREDIT",
+        "serviceNames": [
+          {
+            "language": "en",
+            "value": "Cash Out"
+          },
+          {
+            "language": "bn",
+            "value": "Cash Out[bn]"
+          }
+        ]
+      },
+      {
+        "featureName": "SEND_MONEY",
+        "count": 3,
+        "amount": 122,
+        "transactionType": "DEBIT",
+        "serviceNames": [
+          {
+            "language": "en",
+            "value": "Send Money"
+          },
+          {
+            "language": "bn",
+            "value": "Send Money[bn]"
+          }
+        ]
+      },
+      {
+        "featureName": "SEND_MONEY",
+        "count": 3,
+        "amount": 122,
+        "transactionType": "DEBIT",
+        "serviceNames": [
+          {
+            "language": "en",
+            "value": "Send Money"
+          },
+          {
+            "language": "bn",
+            "value": "Send Money[bn]"
+          }
+        ]
+      },
+      {
+        "featureName": "SEND_MONEY",
+        "count": 4,
+        "amount": 1232,
+        "transactionType": "DEBIT",
+        "serviceNames": [
+          {
+            "language": "en",
+            "value": "Send Money"
+          },
+          {
+            "language": "bn",
+            "value": "Send Money[bn]"
+          }
+        ]
+      },
+      {
+        "featureName": "SEND_MONEY",
+        "count": 5,
+        "amount": 2321,
+        "transactionType": "DEBIT",
+        "serviceNames": [
+          {
+            "language": "en",
+            "value": "Send Money"
+          },
+          {
+            "language": "bn",
+            "value": "Send Money[bn]"
+          }
+        ]
+      },
+      {
+        "featureName": "SEND_MONEY",
+        "count": 1,
+        "amount": 22,
+        "transactionType": "DEBIT",
+        "serviceNames": [
+          {
+            "language": "en",
+            "value": "Send Money"
+          },
+          {
+            "language": "bn",
+            "value": "Send Money[bn]"
+          }
+        ]
+      },
+      {
+        "featureName": "SEND_MONEY",
+        "count": 3,
+        "amount": 35,
+        "transactionType": "DEBIT",
+        "serviceNames": [
+          {
+            "language": "en",
+            "value": "Send Money"
+          },
+          {
+            "language": "bn",
+            "value": "Send Money[bn]"
+          }
+        ]
+      }
+    ]
+    }
+  ],
+  "updateTime": "2019-05-15 11:59:18:000 +0600"
+}

@@ -1,0 +1,4147 @@
+{
+  "updateTime": "2019-10-02 13:53:52:789 +0600",
+  "payBillSettingDataVersion": 2,
+  "billerList": [
+    {
+      "billerId": "DHAKAUNIVERSITY",
+      "billerName": "Dhaka University",
+      "billerNumber": "Dhaka University",
+      "businessShortCode": "Dhaka University",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/DESCO",
+      "displayOrder": 0,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "To"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: Dhaka University"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: Dhaka University"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "input-box-list",
+          "fieldAggregators": [
+            {
+              "cpsName": "billReferenceNumber",
+              "fields": [
+                "payment_identification_number",
+                "applicant_id",
+                "bill_account_number"
+              ],
+              "aggregationStrategy": "join_with_hash"
+            }
+          ],
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Period"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": {
+                  "previous": 0,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "payment_identification_number",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Payment Identification No."
+                },
+                {
+                  "language": "bn",
+                  "value": "পেমেন্ট আইডেন্টিফিকেশন নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "Enter payment identification no."
+                  },
+                  {
+                    "language": "bn",
+                    "value": "পেমেন্ট আইডেন্টিফিকেশন নাম্বার দিন"
+                  }
+                ],
+                "value": null,
+                "regex": "^[a-zA-Z0-9]{1,30}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": false,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "An Error Occurred"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "applicant_id",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Applicant ID"
+                },
+                {
+                  "language": "bn",
+                  "value": "এপ্লিকেন্ট আইডি"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "Enter applicant ID"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "এপ্লিকেন্ট আইডি দিন"
+                  }
+                ],
+                "value": null,
+                "regex": "^[0-9]{1,30}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": false,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "An Error Occurred"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Payslip ID"
+                },
+                {
+                  "language": "bn",
+                  "value": "পেস্লিপ আইডি"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "Enter payslip ID"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "পেস্লিপ আইডি দিন"
+                  }
+                ],
+                "value": null,
+                "regex": "^[a-zA-Z0-9]{1,30}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": false,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "An Error Occurred"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "checkbill",
+            "check_balance"
+          ],
+          "layoutCategory": "amount-fixed",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Period"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": {
+                  "previous": 0,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Payslip ID"
+                },
+                {
+                  "language": "bn",
+                  "value": "পেস্লিপ আইডি"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_due_date",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Due Date"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিশোধের শেষ সময়"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.dueDate",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_status",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Status"
+                },
+                {
+                  "language": "bn",
+                  "value": "স্ট্যাটাস"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.paymentStatus",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Amount"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "fixed-amount",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.billAmount",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "available_balance",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Available Balance"
+                },
+                {
+                  "language": "bn",
+                  "value": "ব্যবহারযোগ্য ব্যালেন্স"
+                }
+              ],
+              "metadata": {
+                "type": "inline-info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": true
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Payslip ID"
+                },
+                {
+                  "language": "bn",
+                  "value": "পেস্লিপ আইডি"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "billerId": "DESCOPrepaid",
+      "billerName": "DESCO (Prepaid)",
+      "billerNumber": "DESCO (Prepaid)",
+      "businessShortCode": "DESCO",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/DESCO",
+      "displayOrder": 2,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "To"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: DESCO (Prepaid)"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: DESCO (Prepaid)"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "account-contact",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নম্বর"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "Enter Bill Account Number"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "বিল একাউন্ট নম্বর দিন"
+                  }
+                ],
+                "value": null,
+                "regex": "^[a-zA-Z0-9]{1,30}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": false,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "contact_number",
+              "cpsName": "contactNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Contact Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "কন্ট্যাক্ট নম্বর"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "Enter Contact Number"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "কন্ট্যাক্ট নম্বর দিন"
+                  }
+                ],
+                "value": null,
+                "regex": "^01[0-9]{9}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": false,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "check_balance"
+          ],
+          "layoutCategory": "amount-editable",
+          "widgets": [
+            {
+              "id": "bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Amount"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "editable-amount",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": [
+                  500,
+                  1000,
+                  1200,
+                  1500
+                ],
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "checkbill"
+          ],
+          "layoutCategory": "amount-details",
+          "widgets": [
+            {
+              "id": "bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Amount"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": true
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "amount_breakdown",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Amount Breakdown"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণের বিস্তারিত"
+                }
+              ],
+              "metadata": {
+                "type": "detail-info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.amountDetail",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "total_amount",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Total"
+                },
+                {
+                  "language": "bn",
+                  "value": "সর্বমোট"
+                }
+              ],
+              "metadata": {
+                "type": "inline-info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.billAmount",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": true
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "PREPAID",
+      "trxApiName": "pay-bill-trx",
+      "preValidationApiName": "prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-08-04 17:53:28:258 +0600"
+    },
+    {
+      "billerId": "Sundarban Gas",
+      "billerName": "Sundarban Gas",
+      "billerNumber": "Sundarban Gas",
+      "businessShortCode": "Sundarban",
+      "logo": null,
+      "displayOrder": 120,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "To"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: Sundarban"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: Sundarban"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "account-month",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Period"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "Enter Bill Account Number"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "বিল একাউন্ট নম্বর দিন"
+                  }
+                ],
+                "value": null,
+                "regex": "^[-a-zA-Z0-9]{1,25}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": false,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "checkbill",
+            "check_balance"
+          ],
+          "layoutCategory": "amount-fixed",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Period"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট  নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের  নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_due_date",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Due Date"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিশোধের শেষ সময়"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.dueDate",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_status",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Status"
+                },
+                {
+                  "language": "bn",
+                  "value": "স্ট্যাটাস"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.paymentStatus",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Amount"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "fixed-amount",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.billAmount",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "available_balance",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Available Balance"
+                },
+                {
+                  "language": "bn",
+                  "value": "ব্যবহারযোগ্য ব্যালেন্স"
+                }
+              ],
+              "metadata": {
+                "type": "inline-info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "POSTPAID",
+      "trxApiName": "pay-bill-trx",
+      "preValidationApiName": "prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-10-01 13:40:18:917 +0600"
+    },
+    {
+      "billerId": "NESCO",
+      "billerName": "NESCO",
+      "billerNumber": "NESCO",
+      "businessShortCode": "NESCO",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/NESCO",
+      "displayOrder": 4,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "To"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: NESCO"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: NESCO"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "account-month",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Period"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": {
+                  "previous": 6,
+                  "next": 2
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "Enter Bill Account Number"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "বিল একাউন্ট নম্বর দিন"
+                  }
+                ],
+                "value": null,
+                "regex": "^[-a-zA-Z0-9]{1,25}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": false,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "An Error Occurred"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "checkbill",
+            "check_balance"
+          ],
+          "layoutCategory": "amount-fixed",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Period"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": {
+                  "previous": -1,
+                  "next": -2
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_due_date",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Due Date"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিশোধের শেষ সময়"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.dueDate",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_status",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Status"
+                },
+                {
+                  "language": "bn",
+                  "value": "স্ট্যাটাস"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.paymentStatus",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Amount"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "fixed-amount",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.billAmount",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "available_balance",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Available Balance"
+                },
+                {
+                  "language": "bn",
+                  "value": "ব্যবহারযোগ্য ব্যালেন্স"
+                }
+              ],
+              "metadata": {
+                "type": "inline-info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": true
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "POSTPAID",
+      "trxApiName": "pay-bill-trx",
+      "preValidationApiName": "prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-09-26 12:41:41:225 +0600"
+    },
+    {
+      "billerId": "BTCL",
+      "billerName": "BTCL",
+      "billerNumber": "BTCL",
+      "businessShortCode": "BTCL",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/BTCL",
+      "displayOrder": 5,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "TO"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: BTCL"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: BTCL"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "account-month",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL PERIOD"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": [],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "ENTER BILL ACCOUNT NUMBER"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "ENTER BILL ACCOUNT NUMBER"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "বিল একাউন্ট নম্বর দিন"
+                  }
+                ],
+                "value": [],
+                "regex": "^[a-zA-Z0-9]{1,25}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": true,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "checkbill",
+            "check_balance"
+          ],
+          "layoutCategory": "amount-fixed",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL PERIOD"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": [],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL ACCOUNT NO."
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট  নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.bill_account_number",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_due_date",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "DUE DATE"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিশোধের শেষ সময়"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.dueDate",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_status",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "STATUS"
+                },
+                {
+                  "language": "bn",
+                  "value": "স্ট্যাটাস"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.paymentStatus",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "amount_bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "AMOUNT"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "fixed-amount",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.billAmount",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "available_balance",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Available Balance"
+                },
+                {
+                  "language": "bn",
+                  "value": "ব্যবহারযোগ্য ব্যালেন্স"
+                }
+              ],
+              "metadata": {
+                "type": "inline-info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "POSTPAID",
+      "trxApiName": "pay-bill-trx",
+      "preValidationApiName": "prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-08-04 18:07:55:668 +0600"
+    },
+    {
+      "billerId": "VISACredit",
+      "billerName": "Credit Card Bill",
+      "billerNumber": "VISA",
+      "businessShortCode": "VISA",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/DESCO",
+      "displayOrder": 20,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "To"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "VISA"
+            },
+            {
+              "language": "bn",
+              "value": "ভিসা"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "pre_init"
+          ],
+          "layoutCategory": "card-input",
+          "widgets": [
+            {
+              "id": "card_number",
+              "cpsName": "cardNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Card Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "কার্ড নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "Enter Card Number"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "কার্ড নাম্বার দিন"
+                  }
+                ],
+                "value": null,
+                "regex": "^4\\d{15}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": false,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "INVALID NUMBER"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "ভুল কার্ড নাম্বার"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "tnc_box",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "By proceeding, you are agreeing to the ${link:Terms and Conditions}."
+                },
+                {
+                  "language": "bn",
+                  "value": "আপনি এই ${link:শর্তাবলী} মেনে সামনে অগ্রসর হচ্ছেন ।"
+                }
+              ],
+              "metadata": {
+                "type": "web-link",
+                "placeholder": [],
+                "value": [
+                  {
+                    "language": "en",
+                    "value": "https://www.sharp-cee.com/cps/rde/xbcr/documents/documents/om/24_humidifier/KC840E-850E-860E_OM_GB.pdf"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "http://intercept.com/terms-and-conditions"
+                  }
+                ],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": [],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "verify_visa_card",
+            "check_balance"
+          ],
+          "layoutCategory": "amount-editable",
+          "widgets": [
+            {
+              "id": "bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Amount"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "editable-amount",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": [
+                  500,
+                  1000,
+                  1200,
+                  1500
+                ],
+                "amountType": true
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "visa-credit-card-bill-prevalidation"
+          ],
+          "layoutCategory": "visa-credit-card-bill-pin-input",
+          "widgets": [
+            {
+              "id": "card_number",
+              "cpsName": "cardNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Card Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "কার্ড নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "verify_visa_card.cardNumberTruncated",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "PREPAID",
+      "trxApiName": "visa-credit-card-bill-pay",
+      "preValidationApiName": "visa-credit-card-bill-prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-08-22 16:24:00:876 +0600"
+    },
+    {
+      "billerId": "DESCOPostpaid",
+      "billerName": "DESCO (Postpaid)",
+      "billerNumber": "DESCO (Postpaid)",
+      "businessShortCode": "DESCOPOST",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/DESCOPOST",
+      "displayOrder": 3,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "To"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: DESCO (Postpaid)"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: DESCO (Postpaid)"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "account-month",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Period"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "Enter Bill Account Number"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "বিল একাউন্ট নম্বর দিন"
+                  }
+                ],
+                "value": null,
+                "regex": "^[a-zA-Z0-9]{1,25}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": false,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "checkbill",
+            "check_balance"
+          ],
+          "layoutCategory": "amount-fixed",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Period"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_due_date",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Due Date"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিশোধের শেষ সময়"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.dueDate",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_status",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Status"
+                },
+                {
+                  "language": "bn",
+                  "value": "স্ট্যাটাস"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.paymentStatus",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Amount"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "fixed-amount",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.billAmount",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "available_balance",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Available Balance"
+                },
+                {
+                  "language": "bn",
+                  "value": "ব্যবহারযোগ্য ব্যালেন্স"
+                }
+              ],
+              "metadata": {
+                "type": "inline-info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": true
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "POSTPAID",
+      "trxApiName": "pay-bill-trx",
+      "preValidationApiName": "prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-08-04 18:06:46:263 +0600"
+    },
+    {
+      "billerId": "Carnival",
+      "billerName": "Carnival",
+      "billerNumber": "Carnival",
+      "businessShortCode": "CARNIVAL",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/Carnival",
+      "displayOrder": 6,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "TO"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: Carnival"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: Carnival"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "account-contact",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "ENTER BILL ACCOUNT NUMBER"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "ENTER BILL ACCOUNT NUMBER"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "বিল একাউন্ট নম্বর দিন"
+                  }
+                ],
+                "value": [],
+                "regex": "^[a-zA-Z0-9]{1,25}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": true,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "contact_number",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "ENTER CONTACT NUMBER"
+                },
+                {
+                  "language": "bn",
+                  "value": "কন্ট্যাক্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "ENTER CONTACT NUMBER"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "কন্ট্যাক্ট নম্বর দিন"
+                  }
+                ],
+                "value": [],
+                "regex": "^[0-9]{1,11}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": true,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "check_balance"
+          ],
+          "layoutCategory": "amount-editable",
+          "widgets": [
+            {
+              "id": "bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Amount"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "editable_amount",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": [
+                  500,
+                  1000,
+                  1200,
+                  1500
+                ],
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "PREPAID",
+      "trxApiName": "pay-bill-trx",
+      "preValidationApiName": "prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-08-04 17:52:23:548 +0600"
+    },
+    {
+      "billerId": "BTEB",
+      "billerName": "BTEB",
+      "billerNumber": "BTEB",
+      "businessShortCode": "01958289054",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/01929918363",
+      "displayOrder": 8,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "TO"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: BTEB"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: BTEB"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "account-contact",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "ENTER BILL ACCOUNT NUMBER"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "ENTER BILL ACCOUNT NUMBER"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "বিল একাউন্ট নম্বর দিন"
+                  }
+                ],
+                "value": [],
+                "regex": "^[a-zA-Z0-9]{1,25}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": true,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "contact_number",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "ENTER CONTACT NUMBER"
+                },
+                {
+                  "language": "bn",
+                  "value": "কন্ট্যাক্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "ENTER CONTACT NUMBER"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "কন্ট্যাক্ট নম্বর দিন"
+                  }
+                ],
+                "value": [],
+                "regex": "^[0-9]{1,11}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": true,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "check_balance"
+          ],
+          "layoutCategory": "amount-editable",
+          "widgets": [
+            {
+              "id": "bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Amount"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "editable_amount",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": [
+                  500,
+                  1000,
+                  1200,
+                  1500
+                ],
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "PREPAID",
+      "trxApiName": "pay-bill-trx",
+      "preValidationApiName": "prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-08-04 18:05:10:281 +0600"
+    },
+    {
+      "billerId": "PalliBidyut",
+      "billerName": "Palli Bidyut",
+      "billerNumber": "Palli Bidyut",
+      "businessShortCode": "REB",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/REB",
+      "displayOrder": 1,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "TO"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: Palli Bidyut"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: Palli Bidyut"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "account-month",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL PERIOD"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": [],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "ENTER BILL ACCOUNT NUMBER"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "ENTER BILL ACCOUNT NUMBER"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "বিল একাউন্ট নম্বর দিন"
+                  }
+                ],
+                "value": [],
+                "regex": "^[a-zA-Z0-9]{1,25}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": true,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "checkbill",
+            "check_balance"
+          ],
+          "layoutCategory": "amount-fixed",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL PERIOD"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": [],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL ACCOUNT NO."
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট  নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_due_date",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "DUE DATE"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিশোধের শেষ সময়"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.dueDate",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_status",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "STATUS"
+                },
+                {
+                  "language": "bn",
+                  "value": "স্ট্যাটাস"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.paymentStatus",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "AMOUNT"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "fixed-amount",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.billAmount",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "available_balance",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Available Balance"
+                },
+                {
+                  "language": "bn",
+                  "value": "ব্যবহারযোগ্য ব্যালেন্স"
+                }
+              ],
+              "metadata": {
+                "type": "inline-info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "POSTPAID",
+      "trxApiName": "pay-bill-trx",
+      "preValidationApiName": "prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-08-04 18:04:26:535 +0600"
+    },
+    {
+      "billerId": "DSCC",
+      "billerName": "Dhaka South City Corporation",
+      "billerNumber": "DSCC",
+      "businessShortCode": "DSCC",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/DSCC",
+      "displayOrder": 6,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "TO"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: BTCL"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: BTCL"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "account-month",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL PERIOD"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": [],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "ENTER BILL ACCOUNT NUMBER"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "ENTER BILL ACCOUNT NUMBER"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "বিল একাউন্ট নম্বর দিন"
+                  }
+                ],
+                "value": [],
+                "regex": "^[a-zA-Z0-9]{1,25}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": true,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "checkbill",
+            "check_balance"
+          ],
+          "layoutCategory": "amount-fixed",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL PERIOD"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": [],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL ACCOUNT NO."
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট  নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.bill_account_number",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_due_date",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "DUE DATE"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিশোধের শেষ সময়"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.dueDate",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_status",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "STATUS"
+                },
+                {
+                  "language": "bn",
+                  "value": "স্ট্যাটাস"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.paymentStatus",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "amount_bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "AMOUNT"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "fixed-amount",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.billAmount",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "available_balance",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Available Balance"
+                },
+                {
+                  "language": "bn",
+                  "value": "ব্যবহারযোগ্য ব্যালেন্স"
+                }
+              ],
+              "metadata": {
+                "type": "inline-info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "POSTPAID",
+      "trxApiName": "pay-bill-trx",
+      "preValidationApiName": "prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-08-04 18:01:00:805 +0600"
+    },
+    {
+      "billerId": "SHAKTI FOUNDATION FOR DISADVANTAGED WOMEN",
+      "billerName": "SHAKTI FOUNDATION FOR DISADVANTAGED WOMEN",
+      "billerNumber": "SHAKTI FOUNDATION FOR DISADVANTAGED WOMEN",
+      "businessShortCode": "01844450000",
+      "logo": "https://s3-ap-southeast-1.amazonaws.com/uat-photos-1xx1651zph2uq-bucket-g5zvip06jdbw/images/public/profile/01929918360",
+      "displayOrder": 7,
+      "pageHeaders": [
+        {
+          "id": "pay_to",
+          "label": [
+            {
+              "language": "en",
+              "value": "TO"
+            },
+            {
+              "language": "bn",
+              "value": "প্রাপক"
+            }
+          ]
+        },
+        {
+          "id": "biller_number",
+          "label": [
+            {
+              "language": "en",
+              "value": "Biller Number: SHAKTI FOUNDATION FOR DISADVANTAGED WOMEN"
+            },
+            {
+              "language": "bn",
+              "value": "বিলার নাম্বার: SHAKTI FOUNDATION FOR DISADVANTAGED WOMEN"
+            }
+          ]
+        }
+      ],
+      "pageSettings": [
+        {
+          "shouldCallApi": false,
+          "apiNames": [],
+          "layoutCategory": "account-month",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL PERIOD"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": [],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "ENTER BILL ACCOUNT NUMBER"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নম্বর দিন"
+                }
+              ],
+              "metadata": {
+                "type": "inputbox",
+                "placeholder": [
+                  {
+                    "language": "en",
+                    "value": "ENTER BILL ACCOUNT NUMBER"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "বিল একাউন্ট নম্বর দিন"
+                  }
+                ],
+                "value": [],
+                "regex": "^[a-zA-Z0-9]{1,25}$",
+                "range": null,
+                "validationMethod": "regex",
+                "forward": true,
+                "field": null,
+                "validationError": [
+                  {
+                    "language": "en",
+                    "value": "AN ERROR OCCURRED"
+                  },
+                  {
+                    "language": "bn",
+                    "value": "একটি ভুল হয়েছে"
+                  }
+                ],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "checkbill",
+            "check_balance"
+          ],
+          "layoutCategory": "amount-fixed",
+          "widgets": [
+            {
+              "id": "bill_period",
+              "cpsName": "billMonth",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL PERIOD"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল সময়সীমা"
+                }
+              ],
+              "metadata": {
+                "type": "daterange",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": {
+                  "previous": 12,
+                  "next": 0
+                },
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": [],
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "BILL ACCOUNT NO."
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট  নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_due_date",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "DUE DATE"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিশোধের শেষ সময়"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.dueDate",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "bill_status",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "STATUS"
+                },
+                {
+                  "language": "bn",
+                  "value": "স্ট্যাটাস"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.paymentStatus",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "amount_bill_amount",
+              "cpsName": "billAmount",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "AMOUNT"
+                },
+                {
+                  "language": "bn",
+                  "value": "পরিমাণ"
+                }
+              ],
+              "metadata": {
+                "type": "fixed-amount",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.billAmount",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "available_balance",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Available Balance"
+                },
+                {
+                  "language": "bn",
+                  "value": "ব্যবহারযোগ্য ব্যালেন্স"
+                }
+              ],
+              "metadata": {
+                "type": "inline-info",
+                "placeholder": null,
+                "value": [],
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "check_balance.availableBalance",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        },
+        {
+          "shouldCallApi": true,
+          "apiNames": [
+            "prevalidation"
+          ],
+          "layoutCategory": "pay-bill-pin-input",
+          "widgets": [
+            {
+              "id": "bill_account_number",
+              "cpsName": "billReferenceNumber",
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Bill Account Number"
+                },
+                {
+                  "language": "bn",
+                  "value": "বিল একাউন্ট নাম্বার"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": null,
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            },
+            {
+              "id": "account_name",
+              "cpsName": null,
+              "label": [
+                {
+                  "language": "en",
+                  "value": "Account Name"
+                },
+                {
+                  "language": "bn",
+                  "value": "একাউন্টের নাম"
+                }
+              ],
+              "metadata": {
+                "type": "info",
+                "placeholder": null,
+                "value": null,
+                "regex": null,
+                "range": null,
+                "validationMethod": null,
+                "forward": false,
+                "field": "checkbill.accountName",
+                "validationError": null,
+                "hotAmounts": null,
+                "amountType": false
+              }
+            }
+          ]
+        }
+      ],
+      "billerType": "POSTPAID",
+      "trxApiName": "pay-bill-trx",
+      "preValidationApiName": "prevalidation",
+      "updatedBy": "Admin",
+      "updateTime": "2019-08-04 18:02:47:986 +0600"
+    }
+  ]
+}

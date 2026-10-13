@@ -1,0 +1,43 @@
+{
+  "nearbyServices": {
+    "anErrorOccurred": "An error occurred. Please try again",
+    "payments": "Merchants",
+    "agents": "Agents",
+    "showRoute": "Show Route",
+    "customerCares": "Customer Care",
+    "atm": "ATMs",
+    "showList": "Show List",
+    "backToMap": "Back to Map",
+    "geoTokenExpiry": {
+      "text": "Please refresh to update your location in order to get accurate map information.",
+      "refreshCta": "Refresh",
+      "gotItCta": "Got it",
+      "backCta": "Back to home"
+    },
+    "category": "Category",
+    "facilities": "Facilities",
+    "report": "Report This",
+    "fastestRoute": "Fastest Route",
+    "byCar": "By Car",
+    "serviceHour": "Service Hour",
+    "locationPermissionDialog" : "In order to get the complete experience of this feature, please enable the location sharing option of your device.",
+    "locationPermissionDialogCTA1" : "Cancel",
+    "locationPermissionDialogCTA2" : "Try Again",
+    "serviceHourModal": {
+      "header" : "Service hour for intercept Customer Care Center and Customer Care",
+      "centerDisclaimer": "Customer Care Center: 7 days a week from 9 AM to 5 PM (Closed on Government Holidays)",
+      "careDisclaimer": "Customer Care: Saturday to Thursday from 10 AM to 6 PM (Closed on Fridays and Government Holidays)",
+      "unforeseenDisclaimer": "Due to unforeseen circumstances, specific Customer Care Center or Customer Care might be closed or service hour might be changed."
+    }
+  },
+  "submitReport": {
+    "thanks": "Thank you for reporting!",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "reportingCriteria": "What do you want to report?",
+    "reportLocation": "Report this location",
+    "reportImage": "Report this image",
+    "criteriaSelectTitle": "Select the reason for the report",
+    "commentHint": "Enter your comment"
+  }
+}
