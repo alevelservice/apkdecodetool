@@ -323,6 +323,7 @@ A rebuilt APK that looks fine can still fail to install. Work through these in o
 3. **Signature not v2/v3.** Check with `apkdt verify <apk>`; modern Android rejects v1-only APKs.
 4. **`minSdkVersion` higher than the phone's Android version.** Check `apktool.yml` against your device.
 5. **Downgrade.** The installed `versionCode` is higher than your rebuild's — bump it with `apkdt config set-version`.
+6. **Native-library alignment (Flutter / React-Native).** Apps with `android:extractNativeLibs="false"` load `.so` files straight from the APK and require 4 KiB page alignment. `apkdt build` runs `zipalign -p` to do this automatically; if you align manually, don't forget `-p`.
 
 ---
 

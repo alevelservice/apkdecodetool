@@ -11,9 +11,17 @@ import os
 from apkdt.util import ApkdtError, run, step, which
 
 
-def align(in_apk: str, out_apk: str, *, alignment: int = 4) -> None:
-    step(f"zipalign -> {out_apk}")
-    run(["zipalign", "-f", str(alignment), in_apk, out_apk])
+def align(in_apk: str, out_apk: str, *, alignment: int = 4, page_align_so: bool = True) -> None:
+    # -p page-aligns uncompressed .so files to 4 KiB. This is required when
+    # the app uses android:extractNativeLibs="false" (the modern default,
+    # and what Flutter/React-Native apps use) — without it the install is
+    # rejected on recent Android with "App not installed".
+    cmd = ["zipalign", "-f"]
+    if page_align_so:
+        cmd.append("-p")
+    cmd += [str(alignment), in_apk, out_apk]
+    step(f"zipalign{' -p' if page_align_so else ''} -> {out_apk}")
+    run(cmd)
 
 
 def generate_keystore(path: str, *, alias: str = "apkdt", storepass: str = "android",
