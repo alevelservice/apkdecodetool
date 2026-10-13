@@ -162,6 +162,19 @@ def cmd_sign(args) -> int:
     return 0
 
 
+# -- verify --------------------------------------------------------------
+def cmd_verify(args) -> int:
+    out = signtool.verify(args.apk)
+    print(out)
+    lower = out.lower()
+    v2 = "v2 scheme" in lower and "true" in lower.split("v2 scheme", 1)[1][:40]
+    if "verified" in lower and ("scheme v2): true" in lower or "scheme v3): true" in lower):
+        ok("APK has a modern (v2/v3) signature — installable on current Android.")
+    else:
+        warn("APK may lack a v2/v3 signature; modern Android can reject it with 'App not installed'.")
+    return 0
+
+
 # -- serve ---------------------------------------------------------------
 def cmd_serve(args) -> int:
     from apkdt.web.server import serve

@@ -97,6 +97,11 @@ def build_parser() -> argparse.ArgumentParser:
                     help="create the keystore first if it does not exist")
     sp.set_defaults(func=w.cmd_sign)
 
+    # verify
+    sp = sub.add_parser("verify", help="print an APK's signature info (v1/v2/v3 schemes)")
+    sp.add_argument("apk")
+    sp.set_defaults(func=w.cmd_verify)
+
     # serve
     sp = sub.add_parser("serve", help="launch the local web UI (upload/decode/edit/rebuild)")
     sp.add_argument("--workdir", default="apkdt_workspace",
