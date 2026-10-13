@@ -32,6 +32,31 @@ Modifying or redistributing third-party apps may be illegal and typically voids 
 
 ---
 
+## Full source & control coverage
+
+`apkdt` aims to give you complete control over **every** part of an APK — not just the design. A decode unpacks the whole package, and each layer is editable and rebuildable:
+
+| Layer of the APK | What you get back | Editable? | Rebuilt into the APK? |
+|------------------|-------------------|-----------|-----------------------|
+| **Code — bytecode** | all `classes*.dex` disassembled to **smali** (multidex) | ✅ full edit | ✅ yes |
+| **Code — readable source** | **Java/Kotlin** recovered via JADX for reading, searching, diffing | 🔎 read/inspect | mapped back through smali |
+| **Resources** | `res/` — layouts, drawables, menus, animations, raw | ✅ full edit | ✅ yes |
+| **Values** | colors, strings, styles, themes, dimens, arrays | ✅ full edit | ✅ yes |
+| **Manifest** | `AndroidManifest.xml` — components, permissions, intents, flags | ✅ full edit | ✅ yes |
+| **Assets** | everything under `assets/` (JSON, HTML/JS, fonts, DBs, models) | ✅ full edit | ✅ yes |
+| **Endpoints / config** | URLs, hosts, IPs, API keys, `.properties`/`.json`/`.xml` config | ✅ scan + replace | ✅ yes |
+| **Network security** | `network_security_config`, cleartext/trust settings | ✅ generate/edit | ✅ yes |
+| **App identity** | package name, versionName/versionCode, app label & icon | ✅ edit | ✅ yes |
+| **Native libraries** | `lib/<abi>/*.so` — listed, strings extracted, swappable | ↔ repackage as-is | ✅ repacked (not recompiled) |
+| **Certificates / signing** | original signer info shown; rebuilt APK **re-signed with your key** | 🔎 inspect + re-sign | ✅ signed |
+| **Packaging** | split APKs / `.xapk` / `.apks` merged before decode | — | ✅ single APK out |
+
+> **Scope reminder:** "full control" means technical completeness over an APK **you are authorized to work on**. The fact that every layer is editable does not change the [responsible-use rules](#legal-and-responsible-use) above.
+
+What the tool does **not** do: recompile native (`.so`) code, defeat DRM/licensing, or re-sign with another publisher's identity.
+
+---
+
 ## Requirements
 
 Runtime and external tools (the CLI shells out to these — it does not reimplement them):
@@ -101,6 +126,18 @@ apkdt decode <app.apk> -o <out_dir/> [options]
 | `--keep-dex` | keep the raw `classes*.dex` alongside the smali |
 
 Produces decoded resources, `AndroidManifest.xml`, smali, and (optionally) a read-only Java view. Multidex is handled automatically.
+
+### `sources`
+
+Export the full readable source (Java/Kotlin) recovered from the DEX, for reading, searching and diffing — the complete "APK → source code" view.
+
+```bash
+apkdt sources export <app.apk|project_dir/> -o <src_out/>   # full JADX decompile
+apkdt sources grep   <project_dir/> "https://"              # search recovered source
+apkdt sources tree   <project_dir/>                         # package/class overview
+```
+
+The exported source is for **inspection**: edits that get rebuilt are made in `smali/` (what the Android toolchain can reassemble), while `sources/` gives you the human-readable picture of the whole codebase.
 
 ### `endpoints`
 
@@ -254,6 +291,7 @@ apkdecodetool/
 
 - [ ] `doctor` dependency checks
 - [ ] `decode` (Apktool + optional JADX)
+- [ ] `sources export` / `grep` / `tree` (full source recovery)
 - [ ] `endpoints scan` / `replace`
 - [ ] `design` helpers
 - [ ] `config` show/edit
