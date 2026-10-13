@@ -6,63 +6,95 @@
 <title>apkdt — APK Decode Tool</title>
 <style>
   :root {
-    --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --border:#2a2f3a;
-    --fg:#e6e9ef; --muted:#9aa4b2; --accent:#4f8cff; --accent2:#3bd671;
-    --warn:#f0b429; --danger:#ff5c5c; --mono:#121419;
+    --bg:#f6f7f9; --panel:#ffffff; --panel2:#f0f2f5; --border:#e3e6ea;
+    --fg:#1a1d21; --muted:#6b7280; --red:#e11d2a; --red-dark:#b3141f;
+    --red-soft:#fdecec; --green:#128a3c; --warn:#b26a00; --mono:#fbfbfc;
+    --shadow:0 1px 3px rgba(16,24,40,.08),0 1px 2px rgba(16,24,40,.06);
   }
   * { box-sizing:border-box; }
-  html,body { margin:0; height:100%; font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  html,body { margin:0; height:100%; font-family:system-ui,"Segoe UI",Roboto,Arial,sans-serif;
     background:var(--bg); color:var(--fg); }
-  header { display:flex; align-items:center; gap:14px; padding:10px 16px;
-    background:var(--panel); border-bottom:1px solid var(--border); }
-  header h1 { font-size:15px; margin:0; font-weight:600; letter-spacing:.3px; }
+  header { display:flex; align-items:center; gap:14px; padding:11px 18px;
+    background:var(--panel); border-bottom:1px solid var(--border); box-shadow:var(--shadow); z-index:5; }
+  header .logo { display:flex; align-items:center; gap:9px; }
+  header .mark { width:26px; height:26px; border-radius:7px; background:var(--red);
+    display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:14px; }
+  header h1 { font-size:15px; margin:0; font-weight:700; letter-spacing:.2px; }
   header .tag { color:var(--muted); font-size:12px; }
   header .spacer { flex:1; }
-  button { background:var(--panel2); color:var(--fg); border:1px solid var(--border);
-    border-radius:7px; padding:7px 12px; font-size:13px; cursor:pointer; }
-  button:hover { border-color:var(--accent); }
-  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
-  button.go { background:var(--accent2); border-color:var(--accent2); color:#06270f; font-weight:600; }
-  button:disabled { opacity:.5; cursor:not-allowed; }
-  .wrap { display:flex; height:calc(100vh - 53px); }
-  .sidebar { width:320px; min-width:240px; background:var(--panel); border-right:1px solid var(--border);
+  button { background:var(--panel); color:var(--fg); border:1px solid var(--border);
+    border-radius:8px; padding:8px 13px; font-size:13px; cursor:pointer; font-weight:500;
+    transition:all .12s ease; }
+  button:hover:not(:disabled) { border-color:var(--red); color:var(--red); }
+  button.primary { background:var(--red); border-color:var(--red); color:#fff; }
+  button.primary:hover:not(:disabled) { background:var(--red-dark); border-color:var(--red-dark); color:#fff; }
+  button.go { background:var(--red); border-color:var(--red); color:#fff; font-weight:700; }
+  button.go:hover:not(:disabled) { background:var(--red-dark); }
+  button:disabled { opacity:.45; cursor:not-allowed; }
+  .wrap { display:flex; height:calc(100vh - 55px); }
+  .sidebar { width:330px; min-width:240px; background:var(--panel); border-right:1px solid var(--border);
     display:flex; flex-direction:column; }
-  .sidebar .search { padding:8px; border-bottom:1px solid var(--border); }
+  .sidebar .search { padding:10px; border-bottom:1px solid var(--border); }
   .sidebar input { width:100%; background:var(--mono); color:var(--fg); border:1px solid var(--border);
-    border-radius:6px; padding:7px 9px; font-size:13px; }
-  .filelist { overflow:auto; flex:1; }
-  .file { padding:5px 10px; font-size:12.5px; cursor:pointer; white-space:nowrap;
-    overflow:hidden; text-overflow:ellipsis; border-left:3px solid transparent; }
+    border-radius:8px; padding:8px 10px; font-size:13px; outline:none; }
+  .sidebar input:focus { border-color:var(--red); }
+  .filelist { overflow:auto; flex:1; padding:4px 0; }
+  .file { padding:6px 12px; font-size:12.5px; cursor:pointer; white-space:nowrap;
+    overflow:hidden; text-overflow:ellipsis; border-left:3px solid transparent; color:var(--fg); }
   .file:hover { background:var(--panel2); }
-  .file.active { background:var(--panel2); border-left-color:var(--accent); }
+  .file.active { background:var(--red-soft); border-left-color:var(--red); color:var(--red-dark); font-weight:600; }
   .file.ro { color:var(--muted); }
   .main { flex:1; display:flex; flex-direction:column; min-width:0; }
-  .toolbar { display:flex; align-items:center; gap:10px; padding:8px 12px;
+  .toolbar { display:flex; align-items:center; gap:10px; padding:9px 14px;
     background:var(--panel); border-bottom:1px solid var(--border); }
   .toolbar .fname { font-family:ui-monospace,Consolas,monospace; font-size:12.5px; color:var(--muted);
     overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   textarea#editor { flex:1; width:100%; border:0; resize:none; outline:none;
     background:var(--mono); color:var(--fg); font-family:ui-monospace,Consolas,monospace;
-    font-size:13px; line-height:1.5; padding:12px; tab-size:4; }
-  .drop { margin:auto; text-align:center; color:var(--muted); max-width:460px; padding:40px; }
-  .drop h2 { color:var(--fg); font-weight:600; }
-  .drop .zone { border:2px dashed var(--border); border-radius:12px; padding:34px; margin-top:16px;
-    cursor:pointer; }
-  .drop .zone.hover { border-color:var(--accent); background:var(--panel); }
-  #log { background:var(--mono); border-top:1px solid var(--border); color:var(--muted);
-    font-family:ui-monospace,Consolas,monospace; font-size:12px; padding:8px 12px; height:120px;
+    font-size:13px; line-height:1.55; padding:14px; tab-size:4; }
+  .drop { margin:auto; text-align:center; color:var(--muted); max-width:480px; padding:40px; }
+  .drop h2 { color:var(--fg); font-weight:700; font-size:20px; }
+  .drop .zone { border:2px dashed var(--border); border-radius:14px; padding:40px; margin-top:18px;
+    cursor:pointer; background:var(--panel); transition:all .12s ease; }
+  .drop .zone:hover, .drop .zone.hover { border-color:var(--red); background:var(--red-soft); color:var(--red-dark); }
+  .drop .zone .big { font-size:34px; }
+  #log { background:#fff; border-top:1px solid var(--border); color:var(--muted);
+    font-family:ui-monospace,Consolas,monospace; font-size:12px; padding:9px 14px; height:120px;
     overflow:auto; white-space:pre-wrap; }
-  .pill { font-size:11px; padding:2px 7px; border-radius:20px; border:1px solid var(--border); color:var(--muted); }
-  .pill.ok { color:var(--accent2); border-color:var(--accent2); }
-  .pill.no { color:var(--danger); border-color:var(--danger); }
-  a.dl { color:var(--accent2); font-weight:600; text-decoration:none; }
+  #log div { padding:1px 0; }
+  .pill { font-size:11px; padding:3px 9px; border-radius:20px; border:1px solid var(--border);
+    color:var(--muted); background:var(--panel); }
+  .pill.ok { color:var(--green); border-color:#bfe6cc; background:#f1faf4; }
+  .pill.no { color:var(--red); border-color:#f6cccf; background:var(--red-soft); }
+  a.dl { color:var(--red); font-weight:700; text-decoration:none; }
+  a.dl:hover { text-decoration:underline; }
   .notice { font-size:11.5px; color:var(--warn); }
+
+  /* progress overlay */
+  .overlay { position:fixed; inset:0; background:rgba(246,247,249,.82); backdrop-filter:blur(3px);
+    display:none; align-items:center; justify-content:center; z-index:50; }
+  .overlay.show { display:flex; }
+  .card { background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:0 10px 40px rgba(16,24,40,.18);
+    width:min(460px,92vw); padding:26px 28px; }
+  .card h3 { margin:0 0 4px; font-size:16px; }
+  .card .sub { color:var(--muted); font-size:12.5px; margin-bottom:18px; word-break:break-all; }
+  .bar { height:12px; background:var(--panel2); border-radius:20px; overflow:hidden; border:1px solid var(--border); }
+  .bar > span { display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--red),#ff5a63);
+    border-radius:20px; transition:width .15s ease; }
+  .bar.indet > span { width:40% !important; animation:slide 1.1s ease-in-out infinite; }
+  @keyframes slide { 0%{margin-left:-40%} 100%{margin-left:100%} }
+  .pct { display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-top:9px; }
+  .steps { display:flex; gap:8px; margin-top:20px; }
+  .steps .s { flex:1; text-align:center; font-size:11px; color:var(--muted);
+    padding:8px 4px; border-radius:9px; background:var(--panel2); border:1px solid var(--border); }
+  .steps .s.active { color:#fff; background:var(--red); border-color:var(--red); font-weight:600; }
+  .steps .s.done { color:var(--green); background:#f1faf4; border-color:#bfe6cc; }
 </style>
 </head>
 <body>
 <header>
-  <h1>apkdt</h1>
-  <span class="tag">decode → edit → rebuild &nbsp;·&nbsp; local · 127.0.0.1</span>
+  <div class="logo"><div class="mark">A</div><h1>apkdt</h1></div>
+  <span class="tag">decode → edit → rebuild · local · 127.0.0.1</span>
   <span id="tools"></span>
   <span class="spacer"></span>
   <span class="notice">Only for apps you own or are authorized to modify.</span>
@@ -87,8 +119,8 @@
 
     <div id="welcome" class="drop">
       <h2>Upload an APK to begin</h2>
-      <p>It will be decoded into smali, resources, manifest and (if JADX is present) a readable Java view. Edit any text file on the left, then Rebuild.</p>
-      <div class="zone" id="dropzone">Click here or drop an .apk file</div>
+      <p>It is decoded into smali, resources, manifest and (if JADX is installed) a readable Java view. Edit any text file on the left, then Rebuild.</p>
+      <div class="zone" id="dropzone"><div class="big">📦</div>Click here or drop an .apk file</div>
     </div>
 
     <textarea id="editor" spellcheck="false" style="display:none"></textarea>
@@ -96,119 +128,156 @@
   </section>
 </div>
 
+<!-- progress overlay -->
+<div class="overlay" id="overlay">
+  <div class="card">
+    <h3 id="ovTitle">Uploading…</h3>
+    <div class="sub" id="ovSub">—</div>
+    <div class="bar" id="ovBar"><span id="ovFill"></span></div>
+    <div class="pct"><span id="ovPct">0%</span><span id="ovDetail"></span></div>
+    <div class="steps">
+      <div class="s" id="st-up">1 · Upload</div>
+      <div class="s" id="st-dec">2 · Decode</div>
+      <div class="s" id="st-load">3 · Load files</div>
+    </div>
+  </div>
+</div>
+
 <script>
 const $ = s => document.querySelector(s);
 let files = [], current = null, dirty = false;
 
+function fmtBytes(n){ if(n<1024)return n+" B"; if(n<1048576)return (n/1024).toFixed(1)+" KB"; return (n/1048576).toFixed(2)+" MB"; }
 function log(msg, cls) {
-  const el = $("#log");
-  const line = document.createElement("div");
+  const el = $("#log"); const line = document.createElement("div");
   line.textContent = (new Date().toLocaleTimeString()) + "  " + msg;
-  if (cls) line.style.color = cls === "err" ? "var(--danger)"
-                           : cls === "ok" ? "var(--accent2)" : "var(--warn)";
+  if (cls) line.style.color = cls==="err"?"var(--red)":cls==="ok"?"var(--green)":"var(--warn)";
   el.appendChild(line); el.scrollTop = el.scrollHeight;
 }
 
-async function refreshStatus() {
-  const r = await fetch("/api/status"); const s = await r.json();
-  const t = s.tools || {};
-  const need = ["apktool","zipalign","apksigner"];
-  const ok = need.every(n => t[n]);
-  $("#tools").innerHTML = Object.entries(t).map(([k,v]) =>
-    `<span class="pill ${v?'ok':'no'}">${k}</span>`).join(" ");
-  $("#rebuildBtn").disabled = !(s.decoded && ok);
-  if (!ok) log("Missing required tools: " + need.filter(n=>!t[n]).join(", ") +
-               " — rebuild disabled. See README (APKDT_TOOLS).", "warn");
-  if (s.decoded) { await loadFiles(); hideWelcome(); }
+/* ---- overlay helpers ---- */
+function setStep(id){
+  ["st-up","st-dec","st-load"].forEach(s=>$("#"+s).classList.remove("active","done"));
+  const order=["st-up","st-dec","st-load"]; const i=order.indexOf(id);
+  order.forEach((s,k)=>{ if(k<i)$("#"+s).classList.add("done"); });
+  $("#"+id).classList.add("active");
 }
+function showOverlay(title,sub){ $("#ovTitle").textContent=title; $("#ovSub").textContent=sub||"";
+  $("#overlay").classList.add("show"); }
+function hideOverlay(){ $("#overlay").classList.remove("show"); }
+function setPct(p,detail){ $("#ovBar").classList.remove("indet"); $("#ovFill").style.width=p+"%";
+  $("#ovPct").textContent=p+"%"; $("#ovDetail").textContent=detail||""; }
+function setIndet(label){ $("#ovBar").classList.add("indet"); $("#ovPct").textContent=label||"";
+  $("#ovDetail").textContent=""; }
 
+async function refreshStatus() {
+  const s = await (await fetch("/api/status")).json();
+  const t = s.tools||{}; const need=["apktool","zipalign","apksigner"];
+  const ok = need.every(n=>t[n]);
+  $("#tools").innerHTML = Object.entries(t).map(([k,v])=>`<span class="pill ${v?'ok':'no'}">${k}</span>`).join(" ");
+  $("#rebuildBtn").disabled = !(s.decoded && ok);
+  if(!ok) log("Missing required tools: "+need.filter(n=>!t[n]).join(", ")+" — rebuild disabled.","warn");
+  if(s.decoded){ await loadFiles(); hideWelcome(); }
+}
 function hideWelcome(){ $("#welcome").style.display="none"; $("#editor").style.display="block"; }
 
 async function loadFiles() {
-  const r = await fetch("/api/files"); const d = await r.json();
-  files = d.files || []; renderFiles();
-  log(files.length + " files loaded.");
+  const d = await (await fetch("/api/files")).json();
+  files = d.files||[]; renderFiles(); log(files.length+" files loaded.");
 }
-
 function renderFiles() {
-  const q = $("#filter").value.toLowerCase();
-  const list = $("#filelist"); list.innerHTML = "";
-  for (const f of files) {
-    if (q && !f.path.toLowerCase().includes(q)) continue;
-    const div = document.createElement("div");
-    div.className = "file" + (f.editable ? "" : " ro") + (current===f.path ? " active" : "");
-    div.textContent = f.path;
-    div.title = f.path + (f.editable ? "" : "  (not editable here)");
-    if (f.editable) div.onclick = () => openFile(f.path);
-    else div.onclick = () => log(f.path + " is binary / too large — edit it on disk.", "warn");
-    list.appendChild(div);
+  const q=$("#filter").value.toLowerCase(); const list=$("#filelist"); list.innerHTML="";
+  let shown=0;
+  for(const f of files){
+    if(q && !f.path.toLowerCase().includes(q)) continue;
+    const div=document.createElement("div");
+    div.className="file"+(f.editable?"":" ro")+(current===f.path?" active":"");
+    div.textContent=f.path; div.title=f.path+(f.editable?"":"  (binary / not editable here)");
+    if(f.editable) div.onclick=()=>openFile(f.path);
+    else div.onclick=()=>log(f.path+" is binary / too large — edit it on disk.","warn");
+    list.appendChild(div); shown++;
   }
+  if(!shown){ const e=document.createElement("div"); e.className="file ro"; e.textContent="(no files)"; list.appendChild(e); }
 }
 
-async function openFile(path) {
-  if (dirty && !confirm("Discard unsaved changes to " + current + "?")) return;
-  const r = await fetch("/api/file?path=" + encodeURIComponent(path));
-  const d = await r.json();
-  if (d.error) { log("open failed: " + d.error, "err"); return; }
-  current = path; dirty = false;
-  $("#editor").value = d.content;
-  $("#fname").textContent = path;
-  $("#saveBtn").disabled = true;
-  renderFiles();
+async function openFile(path){
+  if(dirty && !confirm("Discard unsaved changes to "+current+"?")) return;
+  const d = await (await fetch("/api/file?path="+encodeURIComponent(path))).json();
+  if(d.error){ log("open failed: "+d.error,"err"); return; }
+  current=path; dirty=false; $("#editor").value=d.content; $("#fname").textContent=path;
+  $("#saveBtn").disabled=true; renderFiles();
 }
-
-async function saveFile() {
-  if (!current) return;
-  const r = await fetch("/api/file", {
-    method:"POST", headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({path: current, content: $("#editor").value})
-  });
-  const d = await r.json();
-  if (d.error) { log("save failed: " + d.error, "err"); return; }
-  dirty = false; $("#saveBtn").disabled = true;
-  log("saved " + current, "ok");
+async function saveFile(){
+  if(!current) return;
+  const d = await (await fetch("/api/file",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({path:current,content:$("#editor").value})})).json();
+  if(d.error){ log("save failed: "+d.error,"err"); return; }
+  dirty=false; $("#saveBtn").disabled=true; log("saved "+current,"ok");
 }
-
-$("#editor").addEventListener("input", () => {
-  dirty = true; $("#saveBtn").disabled = false;
-});
+$("#editor").addEventListener("input",()=>{ dirty=true; $("#saveBtn").disabled=false; });
 
 function pickFile(){ $("#apkInput").click(); }
-$("#uploadBtn").onclick = pickFile;
-$("#dropzone").onclick = pickFile;
-$("#apkInput").onchange = e => { if (e.target.files[0]) uploadApk(e.target.files[0]); };
+$("#uploadBtn").onclick=pickFile; $("#dropzone").onclick=pickFile;
+$("#apkInput").onchange=e=>{ if(e.target.files[0]) uploadApk(e.target.files[0]); };
+const dz=$("#dropzone");
+["dragover","dragenter"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("hover");}));
+["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("hover");}));
+dz.addEventListener("drop",e=>{ if(e.dataTransfer.files[0]) uploadApk(e.dataTransfer.files[0]); });
 
-const dz = $("#dropzone");
-["dragover","dragenter"].forEach(ev => dz.addEventListener(ev, e => {
-  e.preventDefault(); dz.classList.add("hover"); }));
-["dragleave","drop"].forEach(ev => dz.addEventListener(ev, e => {
-  e.preventDefault(); dz.classList.remove("hover"); }));
-dz.addEventListener("drop", e => { if (e.dataTransfer.files[0]) uploadApk(e.dataTransfer.files[0]); });
+/* ---- upload with real progress via XHR ---- */
+function uploadApk(file){
+  const total = file.size;
+  showOverlay("Uploading…", file.name+"  ("+fmtBytes(total)+")");
+  setStep("st-up"); setPct(0, "0 / "+fmtBytes(total));
+  log("uploading "+file.name+" ("+fmtBytes(total)+") …");
 
-async function uploadApk(file) {
-  log("uploading " + file.name + " …");
-  const fd = new FormData(); fd.append("apk", file);
-  const r = await fetch("/api/upload", {method:"POST", body:fd});
-  const d = await r.json();
-  if (d.error) { log("decode failed: " + d.error, "err"); alert("Decode failed: " + d.error); return; }
-  log("decoded " + d.apk + " ✓", "ok");
-  hideWelcome(); await loadFiles(); await refreshStatus();
+  const fd=new FormData(); fd.append("apk",file);
+  const xhr=new XMLHttpRequest();
+  xhr.open("POST","/api/upload");
+
+  xhr.upload.onprogress=e=>{
+    if(e.lengthComputable){
+      const p=Math.round(e.loaded/e.total*100);
+      setPct(p, fmtBytes(e.loaded)+" / "+fmtBytes(e.total));
+    }
+  };
+  xhr.upload.onload=()=>{ // upload finished, server now decoding
+    setStep("st-dec"); showOverlay("Decoding APK…","apktool + jadx — this can take a while for big APKs");
+    setIndet("working…");
+  };
+  xhr.onload=()=>{
+    let d={}; try{ d=JSON.parse(xhr.responseText);}catch(_){}
+    if(xhr.status>=200 && xhr.status<300 && d.ok){
+      setStep("st-load"); setIndet("loading files…");
+      log("decoded "+d.apk+" ✓","ok");
+      hideWelcome();
+      Promise.all([loadFiles(), refreshStatus()]).then(()=>{ hideOverlay(); });
+    } else {
+      hideOverlay();
+      const msg=(d&&d.error)||("HTTP "+xhr.status);
+      log("decode failed: "+msg,"err"); alert("Decode failed:\n"+msg);
+    }
+  };
+  xhr.onerror=()=>{ hideOverlay(); log("upload failed (network).","err"); alert("Upload failed (network)."); };
+  xhr.send(fd);
 }
 
-$("#saveBtn").onclick = saveFile;
-$("#rebuildBtn").onclick = async () => {
-  if (dirty) await saveFile();
+$("#saveBtn").onclick=saveFile;
+$("#rebuildBtn").onclick=async()=>{
+  if(dirty) await saveFile();
+  showOverlay("Rebuilding & signing…","apktool build → zipalign → apksigner");
+  setStep("st-dec"); $("#st-up").classList.add("done"); $("#st-dec").textContent="2 · Build"; $("#st-load").textContent="3 · Sign";
+  setIndet("working…");
+  $("#rebuildBtn").disabled=true;
   log("rebuilding (apktool build → zipalign → sign) …");
-  $("#rebuildBtn").disabled = true;
-  const r = await fetch("/api/rebuild", {method:"POST"});
-  const d = await r.json();
-  $("#rebuildBtn").disabled = false;
-  if (d.error) { log("rebuild failed: " + d.error, "err"); alert("Rebuild failed:\n" + d.error); return; }
-  log("rebuilt & signed ✓ — download ready.", "ok");
-  $("#dlwrap").innerHTML = ' <a class="dl" href="/api/download">⬇ download rebuilt.apk</a>';
+  let d={}; try{ d=await (await fetch("/api/rebuild",{method:"POST"})).json(); }catch(e){ d={error:String(e)}; }
+  hideOverlay(); $("#rebuildBtn").disabled=false;
+  if(d.error){ log("rebuild failed: "+d.error,"err"); alert("Rebuild failed:\n"+d.error); return; }
+  log("rebuilt & signed ✓ — download ready.","ok");
+  $("#dlwrap").innerHTML=' <a class="dl" href="/api/download">⬇ download rebuilt.apk</a>';
 };
 
-window.addEventListener("beforeunload", e => { if (dirty){ e.preventDefault(); e.returnValue=""; }});
+window.addEventListener("beforeunload",e=>{ if(dirty){ e.preventDefault(); e.returnValue=""; }});
 refreshStatus();
 </script>
 </body>
