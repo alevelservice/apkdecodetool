@@ -168,6 +168,14 @@ def create_app(workdir: str) -> Flask:
         proj = DecodedProject(ws.project)
         return jsonify(proj.scan_endpoints().to_json())
 
+    # -- make standalone (strip split-APK requirement) ------------------
+    @app.post("/api/standalone")
+    def standalone():
+        if not os.path.exists(os.path.join(ws.project, "AndroidManifest.xml")):
+            return jsonify({"error": "nothing decoded yet"}), 400
+        changes = DecodedProject(ws.project).make_standalone()
+        return jsonify({"ok": True, "changes": changes})
+
     # -- rebuild + sign --------------------------------------------------
     @app.post("/api/rebuild")
     def rebuild():

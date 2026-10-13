@@ -188,6 +188,46 @@ class DecodedProject:
             root.set(f"{{{ANDROID_NS}}}versionCode", str(code))
         tree.write(self.manifest_path, encoding="utf-8", xml_declaration=True)
 
+    def make_standalone(self) -> list[str]:
+        """Strip 'split required' flags so a bundle's base APK installs alone.
+
+        Play Store App Bundles ship a base.apk plus split config APKs; the
+        base is marked as requiring its splits, so installing it by itself
+        fails with 'App not installed'. This removes those markers. Returns
+        a list of the changes made.
+
+        Note: splits usually carry per-density/-language resources (and, for
+        some apps, native libs). For apps that keep everything in the base
+        (e.g. many Flutter apps) this is enough; for others some resources
+        may be missing until the splits are merged in.
+        """
+        tree = self._parse_manifest()
+        root = tree.getroot()
+        changes: list[str] = []
+        a = lambda attr: f"{{{ANDROID_NS}}}{attr}"
+
+        # manifest-level split attributes (Android 12+ split-type machinery)
+        for attr in ("requiredSplitTypes", "splitTypes"):
+            if root.get(a(attr)) is not None:
+                del root.attrib[a(attr)]
+                changes.append(f"removed manifest android:{attr}")
+
+        app = root.find("./application")
+        if app is not None:
+            if (app.get(a("isSplitRequired")) or "").lower() == "true":
+                app.set(a("isSplitRequired"), "false")
+                changes.append("set application android:isSplitRequired=false")
+            # remove the vending split meta-data entries
+            for md in list(app.findall("./meta-data")):
+                name = md.get(a("name")) or ""
+                if name.startswith("com.android.vending.splits"):
+                    app.remove(md)
+                    changes.append(f"removed meta-data {name}")
+
+        if changes:
+            tree.write(self.manifest_path, encoding="utf-8", xml_declaration=True)
+        return changes
+
     def allow_http(self) -> str:
         """Add a permissive network_security_config (for test servers only).
 

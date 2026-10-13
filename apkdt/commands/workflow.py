@@ -133,6 +133,16 @@ def cmd_config(args) -> int:
         warn("cleartext HTTP enabled — intended for test servers you control")
         ok(f"network security config -> {rel}")
         return 0
+    if args.action == "standalone":
+        changes = proj.make_standalone()
+        if not changes:
+            info("no split-required flags found; this APK is already standalone")
+        else:
+            for c in changes:
+                step(c)
+            ok("base APK marked standalone — rebuild & sign, then install")
+            warn("if resources/translations look missing after install, the app needs its split APKs merged (not yet supported)")
+        return 0
     raise ApkdtError(f"unknown config action: {args.action}")
 
 

@@ -83,6 +83,40 @@ def test_allow_http_writes_config_and_patches_manifest(project):
     assert "usesCleartextTraffic" in manifest
 
 
+SPLIT_MANIFEST = """<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.app"
+    android:requiredSplitTypes="base__abi,base__density"
+    android:versionName="1.0.0" android:versionCode="1">
+    <application android:label="Demo" android:isSplitRequired="true">
+        <meta-data android:name="com.android.vending.splits.required" android:value="true"/>
+        <meta-data android:name="com.android.vending.splits" android:resource="@xml/splits0"/>
+        <meta-data android:name="com.android.stamp.type" android:value="STAMP_TYPE_DISTRIBUTION_APK"/>
+        <activity android:name=".MainActivity"/>
+    </application>
+</manifest>
+"""
+
+
+def test_make_standalone_strips_split_flags(tmp_path):
+    root = tmp_path / "split"
+    root.mkdir()
+    (root / "AndroidManifest.xml").write_text(SPLIT_MANIFEST, encoding="utf-8")
+    proj = DecodedProject(str(root))
+    changes = proj.make_standalone()
+    assert changes  # something was changed
+    text = open(proj.manifest_path).read()
+    assert "isSplitRequired=\"false\"" in text or "isSplitRequired='false'" in text
+    assert "com.android.vending.splits.required" not in text
+    assert "com.android.vending.splits\"" not in text and "@xml/splits0" not in text
+    assert "requiredSplitTypes" not in text
+    # unrelated meta-data is preserved
+    assert "com.android.stamp.type" in text
+    # idempotent-ish: running again finds nothing split-required
+    again = proj.make_standalone()
+    assert all("isSplitRequired" not in c for c in again) or again == []
+
+
 def test_scan_report_json_roundtrip(project):
     data = project.scan_endpoints().to_json()
     text = json.dumps(data)

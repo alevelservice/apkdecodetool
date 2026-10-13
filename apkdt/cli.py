@@ -78,6 +78,9 @@ def build_parser() -> argparse.ArgumentParser:
     sv.add_argument("--name")
     sv.add_argument("--code")
     csub.add_parser("allow-http").add_argument("project")
+    csub.add_parser("standalone",
+        help="strip split-APK requirements so a bundle base.apk installs alone"
+        ).add_argument("project")
     sp.set_defaults(func=w.cmd_config)
 
     # build

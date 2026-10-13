@@ -112,6 +112,7 @@
       <input id="apkInput" type="file" accept=".apk,.xapk,.apks" style="display:none">
       <span class="fname" id="fname">no file open</span>
       <span class="spacer" style="flex:1"></span>
+      <button id="standaloneBtn" title="Strip split-APK requirement so a Play Store base.apk installs on its own" disabled>🧩 Make standalone</button>
       <button id="saveBtn" disabled>💾 Save file</button>
       <button id="rebuildBtn" class="go" disabled>🔨 Rebuild &amp; Sign</button>
       <span id="dlwrap"></span>
@@ -176,6 +177,7 @@ async function refreshStatus() {
   const ok = need.every(n=>t[n]);
   $("#tools").innerHTML = Object.entries(t).map(([k,v])=>`<span class="pill ${v?'ok':'no'}">${k}</span>`).join(" ");
   $("#rebuildBtn").disabled = !(s.decoded && ok);
+  $("#standaloneBtn").disabled = !s.decoded;
   if(!ok) log("Missing required tools: "+need.filter(n=>!t[n]).join(", ")+" — rebuild disabled.","warn");
   if(s.decoded){ await loadFiles(); hideWelcome(); }
 }
@@ -263,6 +265,14 @@ function uploadApk(file){
 }
 
 $("#saveBtn").onclick=saveFile;
+$("#standaloneBtn").onclick=async()=>{
+  let d={}; try{ d=await (await fetch("/api/standalone",{method:"POST"})).json(); }catch(e){ d={error:String(e)}; }
+  if(d.error){ log("standalone failed: "+d.error,"err"); return; }
+  if(!d.changes || !d.changes.length){ log("already standalone — no split flags found.","warn"); }
+  else { d.changes.forEach(c=>log("standalone: "+c,"ok"));
+         log("now click Rebuild & Sign, then install.","ok");
+         if(current==="AndroidManifest.xml") openFile(current); }
+};
 $("#rebuildBtn").onclick=async()=>{
   if(dirty) await saveFile();
   showOverlay("Rebuilding & signing…","apktool build → zipalign → apksigner");

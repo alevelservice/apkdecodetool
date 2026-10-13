@@ -209,6 +209,7 @@ Inspect and adjust manifest-level and app configuration.
 apkdt config show        <project_dir/>          # package, version, perms, components
 apkdt config set-version <project_dir/> --name 1.2.3 --code 42
 apkdt config allow-http  <project_dir/>          # add a network_security_config for cleartext (testing)
+apkdt config standalone  <project_dir/>          # strip split-APK requirement (see below)
 ```
 
 ### `build`
@@ -302,11 +303,26 @@ Because edits are applied to the decoded smali and resources (the Java view is r
 
 | Symptom | Likely cause / fix |
 |---------|--------------------|
-| `apkdt doctor` reports a missing tool | install it and ensure it's on `PATH` |
+| `apkdt doctor` reports a missing tool | install it, or point apkdt at it with `APKDT_TOOLS` / `APKDT_<TOOL>` |
 | Build fails with resource errors | a resource edit broke XML; rebuild from a clean `decode` and reapply changes incrementally |
+| **"App not installed" on the phone** | see [Why "App not installed"?](#why-app-not-installed) below |
 | App installs but won't update the store version | expected — it's signed with your key, not the original's; install as a separate build |
 | App crashes after endpoint change | the new server must speak the same API/TLS; use `config allow-http` only for test servers |
 | Native (`.so`) behaviour unchanged | native libraries are repackaged as-is; `apkdt` does not recompile native code |
+
+### Why "App not installed"?
+
+A rebuilt APK that looks fine can still fail to install. Work through these in order:
+
+1. **The original app is already installed.** Your APK is signed with *your* key, so Android won't install it over a differently-signed copy. **Uninstall the original first.**
+2. **It's a Play Store App Bundle (`base.apk`).** If `apktool.yml` shows `apkFileName: base.apk`, the app was split into a base + config APKs, and the base is flagged "split required" — Android refuses to install it alone. Run:
+   ```bash
+   apkdt config standalone <project_dir/>      # or the "🧩 Make standalone" button in the web UI
+   ```
+   then rebuild & sign. (Apps that keep everything in the base — many Flutter apps — install fine after this; others may be missing some density/language resources that lived in the splits.)
+3. **Signature not v2/v3.** Check with `apkdt verify <apk>`; modern Android rejects v1-only APKs.
+4. **`minSdkVersion` higher than the phone's Android version.** Check `apktool.yml` against your device.
+5. **Downgrade.** The installed `versionCode` is higher than your rebuild's — bump it with `apkdt config set-version`.
 
 ---
 
@@ -337,6 +353,8 @@ apkdecodetool/
 - [x] `build` + `sign` (+ keystore generation)
 - [x] `all` with patch files
 - [x] `serve` — local web UI (upload / edit / rebuild in the browser)
+- [x] `verify` — report APK signature schemes
+- [x] `config standalone` — strip split-APK requirement from a bundle base.apk
 - [ ] `design set-icon` and layout helpers
 - [ ] split APK / `.xapk` merging
 - [ ] native-library string extraction
