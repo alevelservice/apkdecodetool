@@ -1,0 +1,274 @@
+# APK Decode Tool
+
+> Decode an Android APK back into readable source and resources, review or modify its design, configuration and network endpoints, then rebuild and sign it — intended for **apps you own or are authorized to work on**.
+
+APK Decode Tool (`apkdt`) is a command-line wrapper around the standard, well-known Android reverse-engineering toolchain — [Apktool](https://apktool.org/), [JADX](https://github.com/skylot/jadx), `zipalign` and `apksigner` — that ties them into one workflow:
+
+```
+app.apk ──► decode ──► inspect / edit resources & config ──► build ──► sign ──► app-rebuilt.apk
+```
+
+> **Project status:** early development. This README is the design specification for the tool; the commands below describe the intended behaviour. See the [Roadmap](#roadmap) for what is implemented today.
+
+---
+
+## Legal and responsible use
+
+**Read this first.** Decompiling and rebuilding apps is a powerful capability with legitimate and illegitimate uses. This project is intended **only** for:
+
+- apps you **build or own**;
+- apps you have **explicit written permission** to analyze or modify (e.g. a client engagement or a bug-bounty program whose scope allows it);
+- **security research**, malware analysis and education on software you are authorized to examine;
+- **interoperability** and accessibility work permitted by law in your jurisdiction.
+
+It is **not** intended for, and you must not use it to:
+
+- bypass licensing, DRM, payment or authentication of software you don't own;
+- repackage, rebrand or redistribute someone else's app;
+- remove attribution, inject code, or impersonate another publisher;
+- violate an app's terms of service, a platform's policies, or any applicable law.
+
+Modifying or redistributing third-party apps may be illegal and typically voids their integrity guarantees. **You are solely responsible for how you use this tool.** When in doubt, get written authorization first.
+
+---
+
+## Requirements
+
+Runtime and external tools (the CLI shells out to these — it does not reimplement them):
+
+| Dependency | Purpose |
+|------------|---------|
+| **Java JDK 11+** | required by Apktool, JADX and apksigner |
+| **Apktool** | decode/rebuild resources, manifest and smali |
+| **JADX** (optional) | decompile DEX to readable Java for inspection |
+| **Android build tools** (`zipalign`, `apksigner`) | align and sign the rebuilt APK |
+| **Python 3.10+** | the `apkdt` CLI itself |
+
+On Debian/Ubuntu most of these are available via `apt` (`apktool`, `zipalign`, `apksigner`) plus a JADX release download.
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/alevelservice/apkdecodetool.git
+cd apkdecodetool
+pip install -e .
+
+# verify external tools are discoverable
+apkdt doctor
+```
+
+`apkdt doctor` checks that Java, Apktool, JADX, zipalign and apksigner are on your `PATH` and reports versions, so missing dependencies surface before you start.
+
+---
+
+## Quick start
+
+```bash
+# 1. Decode an APK you own into an editable project folder
+apkdt decode myapp.apk -o myapp_src/
+
+# 2. See which endpoints the app talks to
+apkdt endpoints scan myapp_src/
+
+# 3. Point it at your own test/staging backend
+apkdt endpoints replace myapp_src/ \
+    --from https://api.example.com \
+    --to   https://staging.example.internal
+
+# 4. Rebuild and sign with YOUR debug/test key
+apkdt build myapp_src/ -o myapp-rebuilt.apk
+apkdt sign  myapp-rebuilt.apk --keystore my-debug.keystore
+```
+
+---
+
+## Commands
+
+### `decode`
+
+Unpack an APK into a readable, editable project directory.
+
+```bash
+apkdt decode <app.apk> -o <out_dir/> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--no-sources` | skip JADX Java decompilation (faster; smali only) |
+| `--no-res` | skip resource decoding (smali + manifest only) |
+| `--keep-dex` | keep the raw `classes*.dex` alongside the smali |
+
+Produces decoded resources, `AndroidManifest.xml`, smali, and (optionally) a read-only Java view. Multidex is handled automatically.
+
+### `endpoints`
+
+Find and change the network endpoints an app uses — useful for pointing a build you own at a test or staging server.
+
+```bash
+apkdt endpoints scan    <project_dir/>                 # list URLs/hosts/IPs found
+apkdt endpoints replace <project_dir/> --from <url> --to <url>
+```
+
+`scan` searches smali, resources, assets and config files and writes an `endpoints.json` report listing each match with its file and line. `replace` performs the substitution across all of those locations and prints a diff summary of what changed.
+
+### `design`
+
+Edit the app's visual resources — colors, strings, styles, launcher icon and layouts — using the decoded `res/` tree.
+
+```bash
+apkdt design set-color  <project_dir/> colorPrimary "#1565C0"
+apkdt design set-string <project_dir/> app_name "My Staging Build"
+apkdt design set-icon   <project_dir/> ./new_icon.png
+```
+
+These are thin helpers over the decoded resource XML; you can also edit `res/` by hand in any editor.
+
+### `config`
+
+Inspect and adjust manifest-level and app configuration.
+
+```bash
+apkdt config show        <project_dir/>          # package, version, perms, components
+apkdt config set-version <project_dir/> --name 1.2.3 --code 42
+apkdt config allow-http  <project_dir/>          # add a network_security_config for cleartext (testing)
+```
+
+### `build`
+
+Rebuild the edited project back into an APK.
+
+```bash
+apkdt build <project_dir/> -o <out.apk>
+```
+
+Runs Apktool build, then `zipalign`. The result is unsigned until you run `sign`.
+
+### `sign`
+
+Align and sign the rebuilt APK with **your own** signing key.
+
+```bash
+apkdt sign <out.apk> --keystore <your.keystore> [--alias <alias>]
+```
+
+A rebuilt APK is signed with a different key than the original, so it will **not** update an existing install from a store — it must be installed as a separate, clearly-your-own build. Generate a test key with:
+
+```bash
+keytool -genkey -v -keystore my-debug.keystore -alias test \
+    -keyalg RSA -keysize 2048 -validity 10000
+```
+
+### `all`
+
+Run decode → (your edits) → build → sign as one pipeline using a patch file.
+
+```bash
+apkdt all myapp.apk --patch patch.yml --keystore my-debug.keystore -o myapp-rebuilt.apk
+```
+
+---
+
+## Output layout
+
+```
+myapp_src/
+├── AndroidManifest.xml      # decoded manifest
+├── apktool.yml              # Apktool metadata (versions, do-not-compress, etc.)
+├── res/                     # layouts, drawables, values (colors/strings/styles)
+├── assets/                  # raw bundled assets
+├── smali/ smali_classesN/   # disassembled bytecode (edited here; rebuilt from here)
+├── lib/                     # native .so libraries (not recompiled)
+├── sources/                 # read-only JADX Java view (inspection only)
+└── endpoints.json           # written by `endpoints scan`
+```
+
+---
+
+## Patch files
+
+A patch file records your intended edits declaratively so a decode → build is reproducible:
+
+```yaml
+# patch.yml
+endpoints:
+  - from: https://api.example.com
+    to:   https://staging.example.internal
+design:
+  colors:
+    colorPrimary: "#1565C0"
+  strings:
+    app_name: "My Staging Build"
+config:
+  version_name: "1.2.3-staging"
+  allow_http: true
+```
+
+Apply it with `apkdt all ... --patch patch.yml`.
+
+---
+
+## How it works
+
+`apkdt` does not reimplement decompilation; it orchestrates established tools and adds a convenience layer:
+
+1. **decode** → Apktool unpacks resources/manifest/smali; JADX optionally produces a Java view.
+2. **edit** → helper commands and/or patch files rewrite decoded XML and smali text.
+3. **build** → Apktool reassembles the APK; `zipalign` aligns it.
+4. **sign** → `apksigner` signs it with your key so a device will install it.
+
+Because edits are applied to the decoded smali and resources (the Java view is read-only), what you review is what gets rebuilt.
+
+---
+
+## Troubleshooting
+
+| Symptom | Likely cause / fix |
+|---------|--------------------|
+| `apkdt doctor` reports a missing tool | install it and ensure it's on `PATH` |
+| Build fails with resource errors | a resource edit broke XML; rebuild from a clean `decode` and reapply changes incrementally |
+| App installs but won't update the store version | expected — it's signed with your key, not the original's; install as a separate build |
+| App crashes after endpoint change | the new server must speak the same API/TLS; use `config allow-http` only for test servers |
+| Native (`.so`) behaviour unchanged | native libraries are repackaged as-is; `apkdt` does not recompile native code |
+
+---
+
+## Project structure
+
+```
+apkdecodetool/
+├── README.md
+├── pyproject.toml
+├── apkdt/
+│   ├── __main__.py        # CLI entry point
+│   ├── commands/          # decode, endpoints, design, config, build, sign
+│   ├── tools/             # wrappers around apktool / jadx / apksigner / zipalign
+│   └── patch.py           # patch-file loader/applier
+└── tests/
+```
+
+---
+
+## Roadmap
+
+- [ ] `doctor` dependency checks
+- [ ] `decode` (Apktool + optional JADX)
+- [ ] `endpoints scan` / `replace`
+- [ ] `design` helpers
+- [ ] `config` show/edit
+- [ ] `build` + `sign`
+- [ ] `all` with patch files
+- [ ] split APK / `.xapk` merging
+
+---
+
+## Contributing
+
+Contributions are welcome. Please keep the [responsible-use scope](#legal-and-responsible-use) in mind — issues or PRs that primarily enable tampering with third-party apps you don't own will be declined.
+
+---
+
+## License
+
+To be decided (MIT suggested). Until a `LICENSE` file is added, all rights reserved by the repository owner.
