@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apkdecodetool"
+version = "0.1.0"
+description = "Decode an Android APK to source, edit resources/endpoints/config, then rebuild and sign — for apps you own or are authorized to modify."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+apkdt = "apkdt.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["apkdt*"]

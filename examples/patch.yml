@@ -1,0 +1,19 @@
+# Example apkdt patch file.
+# Apply with:  apkdt all app.apk --patch examples/patch.yml --keystore my.keystore -o out.apk
+#
+# Only use against an APK you own or are authorized to modify.
+
+endpoints:
+  - from: https://api.example.com
+    to:   https://staging.example.internal
+
+design:
+  colors:
+    colorPrimary: "#1565C0"
+  strings:
+    app_name: "My Staging Build"
+
+config:
+  version_name: "1.2.3-staging"
+  version_code: 10203
+  allow_http: true      # cleartext HTTP — test servers only

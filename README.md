@@ -157,10 +157,10 @@ Edit the app's visual resources — colors, strings, styles, launcher icon and l
 ```bash
 apkdt design set-color  <project_dir/> colorPrimary "#1565C0"
 apkdt design set-string <project_dir/> app_name "My Staging Build"
-apkdt design set-icon   <project_dir/> ./new_icon.png
+# apkdt design set-icon <project_dir/> ./new_icon.png   # planned, see Roadmap
 ```
 
-These are thin helpers over the decoded resource XML; you can also edit `res/` by hand in any editor.
+These are thin helpers over the decoded resource XML; you can also edit `res/` (icons, layouts, styles) by hand in any editor and rebuild.
 
 ### `config`
 
@@ -289,15 +289,17 @@ apkdecodetool/
 
 ## Roadmap
 
-- [ ] `doctor` dependency checks
-- [ ] `decode` (Apktool + optional JADX)
-- [ ] `sources export` / `grep` / `tree` (full source recovery)
-- [ ] `endpoints scan` / `replace`
-- [ ] `design` helpers
-- [ ] `config` show/edit
-- [ ] `build` + `sign`
-- [ ] `all` with patch files
+- [x] `doctor` dependency checks
+- [x] `decode` (Apktool + optional JADX)
+- [x] `sources export` / `grep` / `tree` (full source recovery)
+- [x] `endpoints scan` / `replace`
+- [x] `design` helpers (colors / strings)
+- [x] `config` show / set-version / allow-http
+- [x] `build` + `sign` (+ keystore generation)
+- [x] `all` with patch files
+- [ ] `design set-icon` and layout helpers
 - [ ] split APK / `.xapk` merging
+- [ ] native-library string extraction
 
 ---
 
