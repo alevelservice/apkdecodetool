@@ -93,6 +93,23 @@
   #ibDetails .cant li { color:var(--red-dark); }
   #ibDetails .sum { margin-bottom:10px; color:var(--fg); }
 
+  /* flutter panel */
+  #flutterPanel { background:#fff; border-bottom:1px solid var(--border); padding:12px 16px; font-size:12.5px; }
+  .fp-head { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
+  .fp-note { color:var(--muted); font-size:11.5px; flex:1; min-width:200px; }
+  #fpList { max-height:150px; overflow:auto; margin-bottom:10px; }
+  #fpList .url { font-family:ui-monospace,Consolas,monospace; font-size:12px; padding:3px 6px; border-radius:6px;
+    cursor:pointer; display:flex; justify-content:space-between; gap:10px; }
+  #fpList .url:hover { background:var(--red-soft); }
+  #fpList .url .b { color:var(--muted); }
+  .fp-patch { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .fp-patch input { font-family:ui-monospace,Consolas,monospace; font-size:12px; padding:6px 8px;
+    border:1px solid var(--border); border-radius:7px; min-width:230px; background:var(--mono); color:var(--fg); }
+  .fp-patch input:focus { outline:none; border-color:var(--red); }
+  .fp-len { font-size:11.5px; color:var(--muted); }
+  .fp-len.bad { color:var(--red); font-weight:600; }
+  .fp-len.ok { color:var(--green); }
+
   /* progress overlay */
   .overlay { position:fixed; inset:0; background:rgba(246,247,249,.82); backdrop-filter:blur(3px);
     display:none; align-items:center; justify-content:center; z-index:50; }
@@ -153,6 +170,21 @@
       <button class="ib-more" id="ibMoreBtn" title="Details">ⓘ details</button>
     </div>
     <div id="ibDetails" style="display:none"></div>
+    <div id="flutterPanel" style="display:none">
+      <div class="fp-head">
+        <strong>Flutter endpoints in <code>libapp.so</code></strong>
+        <span class="fp-note">Dart logic can't be edited — but endpoints baked in as text can be swapped to a <b>same-length-or-shorter</b> URL.</span>
+        <button id="fpScan">🔍 Scan libapp.so</button>
+      </div>
+      <div id="fpList"></div>
+      <div class="fp-patch">
+        <input id="fpFrom" placeholder="old URL (from scan)">
+        <span>→</span>
+        <input id="fpTo" placeholder="new URL (≤ old length)">
+        <button id="fpPatch" class="primary">Patch</button>
+        <span id="fpLen" class="fp-len"></span>
+      </div>
+    </div>
 
     <div id="welcome" class="drop">
       <h2>Upload an APK to begin</h2>
@@ -238,7 +270,44 @@ async function loadAnalysis(){
     `<div class="cant"><h4>You cannot edit</h4><ul>${cant}</ul></div></div>`;
   log(`detected ${a.framework} — editability ${a.editability} (~${a.percent}%)`,
       a.editability==="Low"?"warn":"ok");
+  // show the Flutter endpoint tools only for Flutter apps
+  $("#flutterPanel").style.display = (a.framework==="Flutter") ? "block" : "none";
 }
+
+function byteLen(s){ return new TextEncoder().encode(s).length; }
+async function fpScan(){
+  $("#fpList").innerHTML = "<div class='url b'>scanning…</div>";
+  let d; try{ d = await (await fetch("/api/flutter/endpoints")).json(); }catch(e){ d={error:String(e)}; }
+  if(d.error){ $("#fpList").innerHTML=""; log("flutter scan: "+d.error,"err"); return; }
+  const urls = d.distinct||[];
+  if(!urls.length){ $("#fpList").innerHTML="<div class='url b'>no URL strings found in libapp.so</div>"; return; }
+  $("#fpList").innerHTML = urls.map(u=>
+    `<div class="url" data-u="${u.replace(/"/g,'&quot;')}"><span>${u}</span><span class="b">${byteLen(u)} B</span></div>`).join("");
+  $("#fpList").querySelectorAll(".url[data-u]").forEach(el=>{
+    el.onclick=()=>{ $("#fpFrom").value = el.getAttribute("data-u"); fpCheckLen(); };
+  });
+  log(`libapp.so: ${urls.length} endpoint(s) found`,"ok");
+}
+function fpCheckLen(){
+  const o=byteLen($("#fpFrom").value), n=byteLen($("#fpTo").value);
+  const el=$("#fpLen");
+  if(!$("#fpFrom").value){ el.textContent=""; el.className="fp-len"; return; }
+  el.textContent = `new ${n} B / max ${o} B`;
+  el.className = "fp-len " + (n>o ? "bad" : "ok");
+}
+async function fpPatch(){
+  const from=$("#fpFrom").value, to=$("#fpTo").value;
+  if(!from || !to){ log("enter both old and new URL","warn"); return; }
+  if(byteLen(to)>byteLen(from)){ alert("New URL is longer than the original — not allowed. Use a URL ≤ "+byteLen(from)+" bytes."); return; }
+  let d; try{ d = await (await fetch("/api/flutter/patch",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({from,to})})).json(); }catch(e){ d={error:String(e)}; }
+  if(d.error){ log("patch failed: "+d.error,"err"); alert("Patch failed:\n"+d.error); return; }
+  if(!d.count){ log("endpoint not found in libapp.so","warn"); return; }
+  log(`patched libapp.so: ${from} → ${to} (${d.count}×). Rebuild & Sign, then test.`,"ok");
+  fpScan();
+}
+$("#fpScan").onclick=fpScan; $("#fpPatch").onclick=fpPatch;
+$("#fpTo").addEventListener("input",fpCheckLen); $("#fpFrom").addEventListener("input",fpCheckLen);
 $("#ibMoreBtn").onclick=()=>{ const d=$("#ibDetails");
   d.style.display = d.style.display==="none" ? "block" : "none"; };
 

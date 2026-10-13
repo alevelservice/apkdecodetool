@@ -194,6 +194,41 @@ def cmd_info(args) -> int:
     return 0
 
 
+# -- flutter (inspect/patch libapp.so) -----------------------------------
+def cmd_flutter(args) -> int:
+    from apkdt import flutter
+    proj = DecodedProject(args.project).root
+    if args.action == "endpoints":
+        res = flutter.scan_endpoints(proj)
+        if not res["distinct"]:
+            info("no URL-like strings found in libapp.so")
+        for u in res["distinct"]:
+            print(u)
+        return 0
+    if args.action == "strings":
+        libs = flutter.find_libapp(proj)
+        if not libs:
+            raise ApkdtError("no lib/*/libapp.so found — is this a Flutter app?")
+        needle = (args.grep or "").lower()
+        for so in libs:
+            for s in flutter.scan_strings(so, min_len=args.min_len):
+                if needle and needle not in s.value.lower():
+                    continue
+                print(f"{os.path.relpath(so, proj)}@{s.offset}\t{s.value}")
+        return 0
+    if args.action == "patch":
+        if not args.frm or args.to is None:
+            raise ApkdtError("patch needs --from and --to")
+        n = flutter.patch_endpoint(proj, args.frm, args.to)
+        if n == 0:
+            warn(f"'{args.frm}' not found in any libapp.so")
+        else:
+            ok(f"patched {args.frm} -> {args.to} in libapp.so ({n} occurrence(s))")
+            warn("best-effort binary patch — test the app; same-length replacements are safest")
+        return 0
+    raise ApkdtError(f"unknown flutter action: {args.action}")
+
+
 # -- verify --------------------------------------------------------------
 def cmd_verify(args) -> int:
     out = signtool.verify(args.apk)

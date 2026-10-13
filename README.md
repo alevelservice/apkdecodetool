@@ -48,6 +48,7 @@ Modifying or redistributing third-party apps may be illegal and typically voids 
 | **Network security** | `network_security_config`, cleartext/trust settings | ✅ generate/edit | ✅ yes |
 | **App identity** | package name, versionName/versionCode, app label & icon | ✅ edit | ✅ yes |
 | **Native libraries** | `lib/<abi>/*.so` — listed, strings extracted, swappable | ↔ repackage as-is | ✅ repacked (not recompiled) |
+| **Flutter Dart logic** | `lib/<abi>/libapp.so` — AOT-compiled; strings/endpoints readable & endpoint-patchable | ❌ not decompilable; endpoints byte-patchable only | ✅ repacked (not recompiled) |
 | **Certificates / signing** | original signer info shown; rebuilt APK **re-signed with your key** | 🔎 inspect + re-sign | ✅ signed |
 | **Packaging** | split APKs / `.xapk` / `.apks` merged before decode | — | ✅ single APK out |
 
@@ -178,6 +179,18 @@ apkdt sources tree   <project_dir/>                         # package/class over
 ```
 
 The exported source is for **inspection**: edits that get rebuilt are made in `smali/` (what the Android toolchain can reassemble), while `sources/` gives you the human-readable picture of the whole codebase.
+
+### `flutter` (release Flutter apps)
+
+A release Flutter app's Dart code is AOT-compiled into `lib/<abi>/libapp.so` and **cannot be decompiled to editable source** — no tool can do that. What you *can* do is read the strings baked into that library and swap an endpoint to a same-length-or-shorter URL by binary patching:
+
+```bash
+apkdt flutter endpoints <project_dir/>                 # list URLs inside libapp.so
+apkdt flutter strings   <project_dir/> --grep token    # dump/search printable strings
+apkdt flutter patch     <project_dir/> --from https://api.old.com --to https://api.new.io
+```
+
+`patch` refuses a replacement longer than the original (it would shift the binary and corrupt it) and keeps a `.apkdt.bak` backup. This changes **where** the app points, never **how** it behaves — screens, features and logic stay as compiled. Same-length replacements are the safest. The web UI shows a Flutter endpoint panel automatically when it detects a Flutter app.
 
 ### `endpoints`
 
@@ -357,6 +370,7 @@ apkdecodetool/
 - [x] `serve` — local web UI (upload / edit / rebuild in the browser)
 - [x] `verify` — report APK signature schemes
 - [x] `info` — detect framework/language + editability estimate (also shown in the web UI)
+- [x] `flutter` — inspect libapp.so strings/endpoints and length-safe endpoint patching
 - [x] `config standalone` — strip split-APK requirement from a bundle base.apk
 - [ ] `design set-icon` and layout helpers
 - [ ] split APK / `.xapk` merging

@@ -100,6 +100,21 @@ def build_parser() -> argparse.ArgumentParser:
                     help="create the keystore first if it does not exist")
     sp.set_defaults(func=w.cmd_sign)
 
+    # flutter
+    sp = sub.add_parser("flutter", help="inspect/patch a Flutter app's libapp.so (endpoints only)")
+    fsub = sp.add_subparsers(dest="action", required=True)
+    fe = fsub.add_parser("endpoints", help="list URL-like strings baked into libapp.so")
+    fe.add_argument("project")
+    fstr = fsub.add_parser("strings", help="dump printable strings from libapp.so")
+    fstr.add_argument("project")
+    fstr.add_argument("--grep", help="only lines containing this text")
+    fstr.add_argument("--min-len", type=int, default=5)
+    fp = fsub.add_parser("patch", help="replace an endpoint (new must be same length or shorter)")
+    fp.add_argument("project")
+    fp.add_argument("--from", dest="frm", required=True)
+    fp.add_argument("--to", required=True)
+    sp.set_defaults(func=w.cmd_flutter)
+
     # info
     sp = sub.add_parser("info", help="detect framework/language and how editable the app is")
     sp.add_argument("project")

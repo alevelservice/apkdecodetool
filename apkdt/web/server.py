@@ -176,6 +176,30 @@ def create_app(workdir: str) -> Flask:
             return jsonify({"error": "nothing decoded yet"}), 400
         return jsonify(analyze(ws.project).to_json())
 
+    # -- flutter: inspect / patch libapp.so endpoints -------------------
+    @app.get("/api/flutter/endpoints")
+    def flutter_endpoints():
+        from apkdt import flutter
+        if not os.path.exists(os.path.join(ws.project, "AndroidManifest.xml")):
+            return jsonify({"error": "nothing decoded yet"}), 400
+        try:
+            return jsonify(flutter.scan_endpoints(ws.project))
+        except Exception as e:
+            return jsonify({"error": str(e)}), 400
+
+    @app.post("/api/flutter/patch")
+    def flutter_patch():
+        from apkdt import flutter
+        data = request.get_json(force=True, silent=True) or {}
+        old, new = data.get("from", ""), data.get("to", "")
+        if not old or new is None:
+            return jsonify({"error": "need 'from' and 'to'"}), 400
+        try:
+            n = flutter.patch_endpoint(ws.project, old, new)
+        except Exception as e:
+            return jsonify({"error": str(e)}), 400
+        return jsonify({"ok": True, "count": n})
+
     # -- make standalone (strip split-APK requirement) ------------------
     @app.post("/api/standalone")
     def standalone():
