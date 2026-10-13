@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@id/content_layout" android:tag="layout/activity_web_view_0" android:background="@drawable/bg_home" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <include android:id="@id/intercept_toolbar" layout="@layout/toolbar" />
-    <FrameLayout android:id="@id/content_frame" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_below="@id/intercept_toolbar" />
-</RelativeLayout>
